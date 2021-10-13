@@ -31,7 +31,7 @@ body a {
 }
 
 body p {
-  color: #737b7d;
+  color: #444444;
 }
 
 .max-width {
@@ -102,6 +102,13 @@ header nav {
 
 .header-div {
   height: 70px;
+}
+
+.devtools {
+  float: right;
+  position: relative;
+  bottom: 23px;
+  right: 2%;
 }
 
 .header-ul {
@@ -188,10 +195,13 @@ footer a {
 .primary-btn {
   background: #715cdd;
   color: #fff;
+  cursor: pointer;
 }
 
 .primary-btn:hover {
-  cursor: pointer;
+  background: #715cdd;
+  color: #fff;
+  font-weight: 600;
 }
 
 .secondary-btn {
@@ -449,6 +459,8 @@ footer a {
 }
 
 .mission-icon {
+  height: 50px;
+  margin-top: 12px;
   display: inline-block;
   padding-right: 32px;
 }
@@ -845,6 +857,9 @@ footer a {
     text-align: left;
     flex-wrap: wrap;
   }
+  .content-section {
+    margin: 12px;
+  }
   .featured-blog>img {
     width: 100%;
   }
@@ -937,7 +952,7 @@ footer a {
 
 @media screen and (min-width: 768px) and (max-width: 1024px) {
   body p {
-    color: #737b7d;
+    color: #444444;
   }
   .btn {
     border: none;

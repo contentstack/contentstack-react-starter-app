@@ -1,8 +1,8 @@
-import React from "react";
-import Stack from "../sdk/entry";
+import React from 'react';
+import Stack from '../sdk/entry';
 
-import Layout from "../components/layout";
-import RenderComponenets from "../components/render-components";
+import Layout from '../components/layout';
+import RenderComponenets from '../components/render-components';
 
 class Home extends React.Component {
   constructor(props) {
@@ -18,15 +18,15 @@ class Home extends React.Component {
   async componentDidMount() {
     try {
       const result = await Stack.getEntryByUrl(
-        "page",
+        'page',
         this.props.location.pathname,
-        ["page_components.from_blog.featured_blogs"]
+        ['page_components.from_blog.featured_blogs']
       );
       const header = await Stack.getEntry(
-        "header",
-        "navigation_menu.page_reference"
+        'header',
+        'navigation_menu.page_reference'
       );
-      const footer = await Stack.getEntry("footer");
+      const footer = await Stack.getEntry('footer');
       this.setState({
         entry: result[0],
         header: header[0][0],
@@ -43,18 +43,12 @@ class Home extends React.Component {
   render() {
     const { header, footer, entry, error } = this.state;
     const { history } = this.props;
-    console.log(entry);
     if (!error.errorStatus && entry) {
       return (
-        <Layout
-          header={header}
-          footer={footer}
-          seo={entry.seo}
-          activeTab="Home"
-        >
+        <Layout header={header} footer={footer} page={entry} activeTab='Home'>
           <RenderComponenets
             pageComponents={entry.page_components}
-            contentTypeUid="page"
+            contentTypeUid='page'
             entryUid={entry.uid}
             locale={entry.locale}
           />
@@ -63,9 +57,9 @@ class Home extends React.Component {
     }
 
     if (error.errorStatus) {
-      history.push("/error", [error]);
+      history.push('/error', [error]);
     }
-    return "";
+    return '';
   }
 }
 export default Home;
