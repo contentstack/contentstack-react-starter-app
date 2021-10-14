@@ -6,8 +6,8 @@ import DevTools from './devtools';
 export default function Layout(props) {
   const { header, footer, page, blogpost, activeTab, children } = props;
   const jsonObj = { header, footer };
-  jsonObj.page = page || null;
-  jsonObj.blog_post = blogpost || null;
+   page && (jsonObj.page = page);
+   blogpost && (jsonObj.blog_post = blogpost);
 
   return (
     <>

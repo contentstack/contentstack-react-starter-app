@@ -67,14 +67,14 @@ class Blog extends React.Component {
   render() {
     const { header, footer, entry, error, archived, blogList } = this.state;
     const { history } = this.props;
-
+    const list = blogList.concat(archived);
     if (!error.errorStatus && entry) {
       return (
         <Layout
           header={header}
           footer={footer}
           page={entry}
-          blogpost ={blogList}
+          blogpost ={list}
           activeTab='Blog'
         >
           <RenderComponents
