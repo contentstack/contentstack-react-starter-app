@@ -1,6 +1,30 @@
 import React from "react";
 import ReactJson from "react-json-view";
+
+function filterObject(inputObject) {
+  const unWantedProps = [
+    "uid",
+    "_version",
+    "ACL",
+    "_in_progress",
+    "created_at",
+    "created_by",
+    "updated_at",
+    "updated_by",
+    "publish_details",
+  ];
+  for (const key in inputObject) {
+    unWantedProps.includes(key) && delete inputObject[key];
+    if (typeof inputObject[key] !== "object") {
+      continue;
+    }
+    inputObject[key] = filterObject(inputObject[key]);
+  }
+  return inputObject;
+}
 const DevTools = ({ response }) => {
+  const filteredJson = filterObject(response);
+
   return (
     <div
       className="modal fade"
@@ -25,20 +49,16 @@ const DevTools = ({ response }) => {
             ></button>
           </div>
           <div className="modal-body">
-            {response ? (
-              <pre id="jsonViewer">
-                {response && (
-                  <ReactJson
-                    src={response}
-                    collapsed
-                    name="response"
-                    enableClipboard={false}
-                  />
-                )}
-              </pre>
-            ) : (
-              ""
-            )}
+            <pre id="jsonViewer">
+              {filteredJson && (
+                <ReactJson
+                  src={filteredJson}
+                  collapsed={1}
+                  name="response"
+                  enableClipboard={false}
+                />
+              )}
+            </pre>
           </div>
         </div>
       </div>
