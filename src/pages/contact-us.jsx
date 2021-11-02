@@ -47,7 +47,7 @@ class ContactUs extends React.Component {
         <Layout
           header={header}
           footer={footer}
-          seo={entry.seo}
+          page={entry}
           activeTab="Contact Us"
         >
           <RenderComponents

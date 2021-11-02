@@ -1,6 +1,6 @@
 import React from 'react';
 import moment from 'moment';
-import ReactHtmlParser from 'react-html-parser';
+import parse from 'html-react-parser';
 import Stack from '../sdk/entry';
 import Layout from '../components/layout';
 
@@ -39,7 +39,7 @@ class BlogPost extends React.Component {
         footer,
       };
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -85,7 +85,8 @@ class BlogPost extends React.Component {
         <Layout
           header={header}
           footer={footer}
-          seo={entry.seo}
+          page={banner}
+          blogpost={entry}
           activeTab='Blog'
         >
           <RenderComponents
@@ -102,7 +103,7 @@ class BlogPost extends React.Component {
                 {moment(entry.date).format('ddd, MMM D YYYY')},{' '}
                 <strong>{entry.author[0].title}</strong>
               </p>
-              {ReactHtmlParser(entry.body)}
+              {parse(entry.body)}
             </div>
             <div className='blog-column-right'>
               <div className='related-post'>
