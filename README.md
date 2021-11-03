@@ -1,4 +1,4 @@
-![[Contentstack Logo](/public/contentstack.png)](https://www.contentstack.com/)
+[![Contentstack Logo](/public/contentstack.png)](https://www.contentstack.com/)
 
 
 # Build a Starter Website with React.js and Contentstack
