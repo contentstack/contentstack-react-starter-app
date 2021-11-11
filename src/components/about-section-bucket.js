@@ -1,40 +1,40 @@
-import React from "react"
-import ReactHtmlParser from "react-html-parser"
+import React from 'react';
+import parse from 'html-react-parser';
 
 export default function AboutSectionBucket(props) {
-  const { sectionWithBuckets } = props
+  const { sectionWithBuckets } = props;
   function bucketContent(bucket, index) {
     return (
-      <div className="mission-content-section" key={index}>
+      <div className='mission-content-section' key={index}>
         {bucket.icon && (
-          <img className="mission-icon" src={bucket.icon.url} alt="art work" />
+          <img className='mission-icon' src={bucket.icon.url} alt='art work' />
         )}
 
-        <div className="mission-section-content">
+        <div className='mission-section-content'>
           {bucket.title_h3 && <h3>{bucket.title_h3}</h3>}
-          {bucket.description && ReactHtmlParser(bucket.description)}
+          {bucket.description && parse(bucket.description)}
         </div>
       </div>
-    )
+    );
   }
 
   return (
-    <div className="member-main-section">
-      <div className="member-head">
+    <div className='member-main-section'>
+      <div className='member-head'>
         {sectionWithBuckets.title_h2 && <h2>{sectionWithBuckets.title_h2}</h2>}
       </div>
-      <div className="mission-section">
-        <div className="mission-content-top">
+      <div className='mission-section'>
+        <div className='mission-content-top'>
           {sectionWithBuckets.buckets.map(
             (bucket, index) => index < 2 && bucketContent(bucket, index)
           )}
         </div>
-        <div className="mission-content-bottom">
+        <div className='mission-content-bottom'>
           {sectionWithBuckets.buckets.map(
             (bucket, index) => index >= 2 && bucketContent(bucket, index)
           )}
         </div>
       </div>
     </div>
-  )
+  );
 }

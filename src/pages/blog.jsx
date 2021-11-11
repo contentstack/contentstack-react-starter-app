@@ -1,12 +1,12 @@
-import React from "react";
+import React from 'react';
 
-import moment from "moment";
-import { Link } from "react-router-dom";
-import ReactHtmlParser from "react-html-parser";
-import Stack from "../sdk/entry";
-import Layout from "../components/layout";
-import ArchiveRelative from "../components/archive-relative";
-import RenderComponents from "../components/render-components";
+import moment from 'moment';
+import { Link } from 'react-router-dom';
+import parse from 'html-react-parser';
+import Stack from '../sdk/entry';
+import Layout from '../components/layout';
+import ArchiveRelative from '../components/archive-relative';
+import RenderComponents from '../components/render-components';
 
 class Blog extends React.Component {
   constructor(props) {
@@ -28,16 +28,16 @@ class Blog extends React.Component {
   async componentDidMount() {
     try {
       const { location } = this.props;
-      const blog = await Stack.getEntryByUrl("page", location.pathname);
-      const result = await Stack.getEntry("blog_post", [
-        "author",
-        "related_post",
+      const blog = await Stack.getEntryByUrl('page', location.pathname);
+      const result = await Stack.getEntry('blog_post', [
+        'author',
+        'related_post',
       ]);
       const header = await Stack.getEntry(
-        "header",
-        "navigation_menu.page_reference"
+        'header',
+        'navigation_menu.page_reference'
       );
-      const footer = await Stack.getEntry("footer");
+      const footer = await Stack.getEntry('footer');
 
       const archive = [];
       const blogLists = [];
@@ -67,59 +67,59 @@ class Blog extends React.Component {
   render() {
     const { header, footer, entry, error, archived, blogList } = this.state;
     const { history } = this.props;
-
+    const list = blogList.concat(archived);
     if (!error.errorStatus && entry) {
       return (
         <Layout
           header={header}
           footer={footer}
-          seo={entry.seo}
-          activeTab="Blog"
+          page={entry}
+          blogpost ={list}
+          activeTab='Blog'
         >
           <RenderComponents
             pageComponents={entry.page_components}
             blogsPage
-            contentTypeUid="page"
+            contentTypeUid='page'
             entryUid={entry.uid}
             locale={entry.locale}
           />
-          <div className="blog-container">
-            <div className="blog-column-left">
+          <div className='blog-container'>
+            <div className='blog-column-left'>
               {blogList?.map((bloglist) => (
-                <div className="blog-list" key={bloglist.title}>
+                <div className='blog-list' key={bloglist.title}>
                   {bloglist.featured_image && (
                     <Link to={bloglist.url}>
                       <img
-                        alt="blog img"
-                        className="blog-list-img"
+                        alt='blog img'
+                        className='blog-list-img'
                         src={bloglist.featured_image.url}
                       />
                     </Link>
                   )}
-                  <div className="blog-content">
+                  <div className='blog-content'>
                     {bloglist.title && (
                       <Link to={bloglist.url}>
                         <h3>{bloglist.title}</h3>
                       </Link>
                     )}
                     <p>
-                      {moment(bloglist.date).format("ddd, MMM D YYYY")},{" "}
+                      {moment(bloglist.date).format('ddd, MMM D YYYY')},{' '}
                       <strong>{bloglist.author[0].title}</strong>
                     </p>
-                    {bloglist.body &&
-                      ReactHtmlParser(bloglist.body.slice(0, 300))}
+                    {bloglist.body && parse(bloglist.body.slice(0, 300))}
                     {bloglist.url ? (
                       <Link to={bloglist.url}>
-                        <span>{"Read more -->"}</span>
+                        <span>{'Read more -->'}</span>
                       </Link>
                     ) : (
-                      ""
+                      ''
                     )}
                   </div>
                 </div>
               ))}
             </div>
-            <div className="blog-column-right">
+            <div className='blog-column-right'>
               {entry.page_components[1].widget && (
                 <h2>{entry.page_components[1].widget.title_h2} </h2>
               )}
@@ -130,9 +130,9 @@ class Blog extends React.Component {
       );
     }
     if (error.errorStatus) {
-      history.push("/error", [error]);
+      history.push('/error', [error]);
     }
-    return "";
+    return '';
   }
 }
 

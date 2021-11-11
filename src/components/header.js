@@ -1,16 +1,27 @@
-import React from "react"
-import { Link } from "react-router-dom"
-import ReactHtmlParser from "react-html-parser"
+import React from "react";
+import { Link } from "react-router-dom";
+import parse from "html-react-parser";
+import devtoolIcon from "../images/devtools.gif";
 
 export default function Header(props) {
-  const { header } = props
+  const { header } = props;
+
   return (
     <header className="header">
-      {header.notification_bar.show_announcement && (
-        <div className="note-div">
-          {ReactHtmlParser(header.notification_bar.announcement_text)}
-        </div>
-      )}
+      <div className="note-div">
+        {header.notification_bar.show_announcement ? (
+          parse(header.notification_bar.announcement_text)
+        ) : (
+          <div style={{ visibility: "hidden" }}>Devtools section</div>
+        )}
+        <span
+          className="devtools"
+          data-bs-toggle="modal"
+          data-bs-target="#staticBackdrop"
+        >
+          <img src={devtoolIcon} alt="devtools-icon" />
+        </span>
+      </div>
       <div className="max-width header-div">
         <div className="wrapper-logo">
           <Link to="/" title="Contentstack">
@@ -41,5 +52,5 @@ export default function Header(props) {
         </nav>
       </div>
     </header>
-  )
+  );
 }
