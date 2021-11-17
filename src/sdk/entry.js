@@ -1,14 +1,14 @@
 const contentstack = require("contentstack")
-
+console.log(process.env);
 const Stack = contentstack.Stack({
-  api_key: process.env.REACT_APP_API_KEY,
-  delivery_token: process.env.REACT_APP_DELIVERY_TOKEN,
-  environment: process.env.REACT_APP_ENVIRONMENT,
-  region: process.env.REACT_APP_REGION ? process.env.REACT_APP_REGION : "us",
+  api_key: process.env.REACT_APP_CONTENTSTACK_API_KEY,
+  delivery_token: process.env.REACT_APP_CONTENTSTACK_DELIVERY_TOKEN,
+  environment: process.env.REACT_APP_CONTENTSTACK_ENVIRONMENT,
+  region: process.env.REACT_APP_CONTENTSTACK_REGION ? process.env.REACT_APP_CONTENTSTACK_REGION : "us",
 })
 
-if (process.env.REACT_APP_CUSTOM_HOST) {
-  Stack.setHost(process.env.REACT_APP_CUSTOM_HOST)
+if (process.env.REACT_APP_CONTENTSTACK_CUSTOM_HOST) {
+  Stack.setHost(process.env.REACT_APP_CONTENTSTACK_CUSTOM_HOST)
 }
 export default {
   /**
