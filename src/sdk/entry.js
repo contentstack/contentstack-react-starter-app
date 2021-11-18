@@ -1,5 +1,4 @@
 const contentstack = require("contentstack")
-console.log(process.env);
 const Stack = contentstack.Stack({
   api_key: process.env.REACT_APP_CONTENTSTACK_API_KEY,
   delivery_token: process.env.REACT_APP_CONTENTSTACK_DELIVERY_TOKEN,
