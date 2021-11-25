@@ -1,11 +1,11 @@
-import React from "react";
-import moment from "moment";
-import parse from "html-react-parser";
-import Stack from "../sdk/entry";
-import Layout from "../components/layout";
+import React from 'react';
+import moment from 'moment';
+import parse from 'html-react-parser';
+import Stack from '../sdk/entry';
+import Layout from '../components/layout';
 
-import ArchiveRelative from "../components/archive-relative";
-import RenderComponents from "../components/render-components";
+import ArchiveRelative from '../components/archive-relative';
+import RenderComponents from '../components/render-components';
 
 class BlogPost extends React.Component {
   constructor(props) {
@@ -19,28 +19,19 @@ class BlogPost extends React.Component {
     };
   }
 
-  async getBlogs() {
+  getBlogs = async () => {
     try {
-      const banner = await Stack.getEntryByUrl({
-        contentTypeUid: "page",
-        entryUrl: "/blog",
-      });
+      const banner = await Stack.getEntryByUrl('page', '/blog');
       const { location } = this.props;
-      const blog = await Stack.getEntryByUrl({
-        contentTypeUid: "blog_post",
-        entryUrl: location.pathname,
-        referenceFieldPath: ["author", "related_post"],
-        jsonRtePath: ["body", "related_post.body"],
-      });
-      const header = await Stack.getEntry({
-        contentTypeUid: "header",
-        referenceFieldPath: ["navigation_menu.page_reference"],
-        jsonRtePath: ["notification_bar.announcement_text"],
-      });
-      const footer = await Stack.getEntry({
-        contentTypeUid: "footer",
-        jsonRtePath: ["copyright"],
-      });
+      const blog = await Stack.getEntryByUrl('blog_post', location.pathname, [
+        'author',
+        'related_post',
+      ]);
+      const header = await Stack.getEntry(
+        'header',
+        'navigation_menu.page_reference'
+      );
+      const footer = await Stack.getEntry('footer');
       return {
         blog,
         banner,
@@ -50,7 +41,7 @@ class BlogPost extends React.Component {
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 
   async componentDidMount() {
     try {
@@ -96,26 +87,26 @@ class BlogPost extends React.Component {
           footer={footer}
           page={banner}
           blogpost={entry}
-          activeTab="Blog"
+          activeTab='Blog'
         >
           <RenderComponents
             pageComponents={banner.page_components}
             blogsPage
-            contentTypeUid="blog_post"
+            contentTypeUid='blog_post'
             entryUid={entry.uid}
             locale={entry.locale}
           />
-          <div className="blog-container">
-            <div className="blog-detail">
-              <h2>{entry.title ? entry.title : ""}</h2>
+          <div className='blog-container'>
+            <div className='blog-detail'>
+              <h2>{entry.title ? entry.title : ''}</h2>
               <p>
-                {moment(entry.date).format("ddd, MMM D YYYY")},{" "}
+                {moment(entry.date).format('ddd, MMM D YYYY')},{' '}
                 <strong>{entry.author[0].title}</strong>
               </p>
               {parse(entry.body)}
             </div>
-            <div className="blog-column-right">
-              <div className="related-post">
+            <div className='blog-column-right'>
+              <div className='related-post'>
                 {banner.page_components[2].widget && (
                   <h2>{banner.page_components[2].widget.title_h2}</h2>
                 )}
@@ -129,9 +120,9 @@ class BlogPost extends React.Component {
       );
     }
     if (error.errorStatus) {
-      history.push("/error", [error]);
+      history.push('/error', [error]);
     }
-    return "";
+    return '';
   }
 }
 export default BlogPost;

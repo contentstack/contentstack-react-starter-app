@@ -18,7 +18,6 @@
         "react"
     ],
     "rules": {
-        "react/prop-types":0,
-        "no-undef":"off"
+        "react/prop-types":0
     }
 }

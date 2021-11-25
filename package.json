@@ -1,11 +1,10 @@
 {
   "name": "contentstack-react-starter-app",
   "description": "A starter app for Contentstack and React",
-  "version": "1.2.0",
+  "version": "1.1.1",
   "private": true,
   "author": "Contentstack",
   "dependencies": {
-    "@contentstack/utils": "^1.1.0",
     "contentstack": "^3.14.0",
     "html-react-parser": "^1.4.0",
     "moment": "^2.29.1",
@@ -43,6 +42,6 @@
   "license": "MIT",
   "devDependencies": {
     "eslint": "^7.32.0",
-    "eslint-plugin-react": "^7.27.1"
+    "eslint-plugin-react": "^7.27.0"
   }
 }

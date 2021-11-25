@@ -19,7 +19,7 @@ export default function Header(props) {
           data-bs-toggle="modal"
           data-bs-target="#staticBackdrop"
         >
-          <img src={devtoolIcon} alt="devtools-icon" title="Json Preview" />
+          <img src={devtoolIcon} alt="devtools-icon" />
         </span>
       </div>
       <div className="max-width header-div">
