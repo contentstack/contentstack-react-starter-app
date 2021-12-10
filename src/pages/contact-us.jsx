@@ -1,8 +1,9 @@
-import React from "react";
-import Stack from "../sdk/entry";
+import React from 'react';
+import Stack from '../sdk/entry';
 
-import Layout from "../components/layout";
-import RenderComponents from "../components/render-components";
+import Layout from '../components/layout';
+import { onEntryChange } from '../sdk/entry';
+import RenderComponents from '../components/render-components';
 
 class ContactUs extends React.Component {
   constructor(props) {
@@ -15,24 +16,22 @@ class ContactUs extends React.Component {
     };
   }
 
-  async componentDidMount() {
+  async fetchData() {
     try {
       const { location } = this.props;
       const result = await Stack.getEntryByUrl({
-        contentTypeUid: "page",
+        contentTypeUid: 'page',
         entryUrl: location.pathname,
-        jsonRtePath: [
-          "page_components.section_with_html_code.description",
-        ],
+        jsonRtePath: ['page_components.section_with_html_code.description'],
       });
       const header = await Stack.getEntry({
-        contentTypeUid: "header",
-        referenceFieldPath: ["navigation_menu.page_reference"],
-        jsonRtePath: ["notification_bar.announcement_text"],
+        contentTypeUid: 'header',
+        referenceFieldPath: ['navigation_menu.page_reference'],
+        jsonRtePath: ['notification_bar.announcement_text'],
       });
       const footer = await Stack.getEntry({
-        contentTypeUid: "footer",
-        jsonRtePath: ["copyright"],
+        contentTypeUid: 'footer',
+        jsonRtePath: ['copyright'],
       });
       this.setState({
         entry: result[0],
@@ -47,30 +46,24 @@ class ContactUs extends React.Component {
     }
   }
 
+  componentDidMount() {
+    onEntryChange(() => this.fetchData());
+  }
+
   render() {
     const { header, footer, entry, error } = this.state;
     const { history } = this.props;
     if (!error.errorStatus && entry) {
       return (
-        <Layout
-          header={header}
-          footer={footer}
-          page={entry}
-          activeTab="Contact Us"
-        >
-          <RenderComponents
-            pageComponents={entry.page_components}
-            contentTypeUid="page"
-            entryUid={entry.uid}
-            locale={entry.locale}
-          />
+        <Layout header={header} footer={footer} page={entry} activeTab='Contact Us'>
+          <RenderComponents pageComponents={entry.page_components} contentTypeUid='page' entryUid={entry.uid} locale={entry.locale} />
         </Layout>
       );
     }
     if (error.errorStatus) {
-      history.push("/error", [error]);
+      history.push('/error', [error]);
     }
-    return "";
+    return '';
   }
 }
 export default ContactUs;
