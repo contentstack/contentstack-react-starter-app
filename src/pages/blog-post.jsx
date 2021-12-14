@@ -7,6 +7,7 @@ import Layout from '../components/layout';
 import ArchiveRelative from '../components/archive-relative';
 import RenderComponents from '../components/render-components';
 import { onEntryChange } from '../sdk/entry';
+import { addEditableTags } from '@contentstack/utils';
 
 class BlogPost extends React.Component {
   constructor(props) {
@@ -23,6 +24,12 @@ class BlogPost extends React.Component {
   async fetchData() {
     try {
       let { blog, banner, header, footer } = await this.getBlogs();
+      if (process.env.REACT_APP_LIVE_EDITING_TAGS === 'true') {
+        addEditableTags(blog[0], 'blog_post', true);
+        addEditableTags(banner[0], 'page', true);
+        addEditableTags(header[0][0], 'header', true);
+        addEditableTags(footer[0][0], 'footer', true);
+      }
       this.setState({
         entry: blog[0],
         banner: banner[0],
@@ -99,17 +106,17 @@ class BlogPost extends React.Component {
         <Layout header={header} footer={footer} page={banner} blogpost={entry} activeTab='Blog'>
           <RenderComponents pageComponents={banner.page_components} blogsPage contentTypeUid='blog_post' entryUid={entry.uid} locale={entry.locale} />
           <div className='blog-container'>
-            <div className='blog-detail'>
-              <h2>{entry.title ? entry.title : ''}</h2>
-              <p>
-                {moment(entry.date).format('ddd, MMM D YYYY')}, <strong>{entry.author[0].title}</strong>
+            <article className='blog-detail'>
+              <h2 {...entry.$?.title}>{entry.title ? entry.title : ''}</h2>
+              <p {...entry.$?.date}>
+                {moment(entry.date).format('ddd, MMM D YYYY')}, <strong {...entry.author[0].$?.title}>{entry.author[0].title}</strong>
               </p>
-              {parse(entry.body)}
-            </div>
+              <div {...entry.$?.body}>{parse(entry.body)}</div>
+            </article>
             <div className='blog-column-right'>
               <div className='related-post'>
-                {banner.page_components[2].widget && <h2>{banner.page_components[2].widget.title_h2}</h2>}
-                {entry.related_post && <ArchiveRelative blogs={entry.related_post} />}
+                {banner.page_components[2].widget && <h2 {...banner.page_components[2].widget.$?.title_h2}>{banner.page_components[2].widget.title_h2}</h2>}
+                {entry.related_post && <ArchiveRelative {...entry.$?.related_post} blogs={entry.related_post} />}
               </div>
             </div>
           </div>

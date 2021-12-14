@@ -13,6 +13,10 @@ const Stack = contentstack.Stack({
     enable: true,
     host: process.env.REACT_APP_CONTENTSTACK_CUSTOM_HOST ? process.env.REACT_APP_CONTENTSTACK_CUSTOM_HOST : '',
   },
+  clientUrlParams: {
+    protocol: 'https',
+    host: process.env.REACT_APP_CONTENTSTACK_APP_HOST ? process.env.REACT_APP_CONTENTSTACK_APP_HOST : '',
+  },
 });
 
 /**

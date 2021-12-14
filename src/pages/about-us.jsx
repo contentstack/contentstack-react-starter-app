@@ -4,6 +4,7 @@ import Stack from '../sdk/entry';
 import Layout from '../components/layout';
 import RenderComponents from '../components/render-components';
 import { onEntryChange } from '../sdk/entry';
+import { addEditableTags } from '@contentstack/utils';
 
 class About extends React.Component {
   constructor(props) {
@@ -34,6 +35,11 @@ class About extends React.Component {
         contentTypeUid: 'footer',
         jsonRtePath: ['copyright'],
       });
+      if (process.env.REACT_APP_LIVE_EDITING_TAGS === 'true') {
+        addEditableTags(result[0], 'page', true);
+        addEditableTags(header[0][0], 'header', true);
+        addEditableTags(footer[0][0], 'footer', true);
+      }
       this.setState({
         entry: result[0],
         header: header[0][0],

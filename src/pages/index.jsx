@@ -4,6 +4,7 @@ import { onEntryChange } from '../sdk/entry';
 
 import Layout from '../components/layout';
 import RenderComponenets from '../components/render-components';
+import { addEditableTags } from '@contentstack/utils';
 
 class Home extends React.Component {
   constructor(props) {
@@ -18,28 +19,31 @@ class Home extends React.Component {
 
   async fetchData() {
     try {
-      onEntryChange(async () => {
-        const result = await Stack.getEntryByUrl({
-          contentTypeUid: 'page',
-          entryUrl: this.props.location.pathname,
-          referenceFieldPath: ['page_components.from_blog.featured_blogs'],
-          jsonRtePath: ['page_components.from_blog.featured_blogs.body', 'page_components.section_with_buckets.buckets.description'],
-        });
-        const header = await Stack.getEntry({
-          contentTypeUid: 'header',
-          referenceFieldPath: ['navigation_menu.page_reference'],
-          jsonRtePath: ['notification_bar.announcement_text'],
-        });
-        const footer = await Stack.getEntry({
-          contentTypeUid: 'footer',
-          jsonRtePath: ['copyright'],
-        });
-        this.setState({
-          entry: result[0],
-          header: header[0][0],
-          footer: footer[0][0],
-          error: { errorStatus: false },
-        });
+      const result = await Stack.getEntryByUrl({
+        contentTypeUid: 'page',
+        entryUrl: this.props.location.pathname,
+        referenceFieldPath: ['page_components.from_blog.featured_blogs'],
+        jsonRtePath: ['page_components.from_blog.featured_blogs.body', 'page_components.section_with_buckets.buckets.description'],
+      });
+      const header = await Stack.getEntry({
+        contentTypeUid: 'header',
+        referenceFieldPath: ['navigation_menu.page_reference'],
+        jsonRtePath: ['notification_bar.announcement_text'],
+      });
+      const footer = await Stack.getEntry({
+        contentTypeUid: 'footer',
+        jsonRtePath: ['copyright'],
+      });
+      if (process.env.REACT_APP_LIVE_EDITING_TAGS === 'true') {
+        addEditableTags(result[0], 'page', true);
+        addEditableTags(header[0][0], 'header', true);
+        addEditableTags(footer[0][0], 'footer', true);
+      }
+      this.setState({
+        entry: result[0],
+        header: header[0][0],
+        footer: footer[0][0],
+        error: { errorStatus: false },
       });
     } catch (error) {
       this.setState({

@@ -8,6 +8,7 @@ import Layout from '../components/layout';
 import ArchiveRelative from '../components/archive-relative';
 import RenderComponents from '../components/render-components';
 import { onEntryChange } from '../sdk/entry';
+import { addEditableTags } from '@contentstack/utils';
 
 class Blog extends React.Component {
   constructor(props) {
@@ -50,6 +51,7 @@ class Blog extends React.Component {
 
       const archive = [];
       const blogLists = [];
+      
       result[0].forEach((blogs) => {
         if (blogs.is_archived) {
           archive.push(blogs);
@@ -57,7 +59,12 @@ class Blog extends React.Component {
           blogLists.push(blogs);
         }
       });
-
+      if (process.env.REACT_APP_LIVE_EDITING_TAGS === 'true') {
+        result[0].forEach(async (blog) => await addEditableTags(blog, 'blog_post', true));
+        addEditableTags(blog[0], 'page', true);
+        addEditableTags(header[0][0], 'header', true);
+        addEditableTags(footer[0][0], 'footer', true);
+      }
       this.setState({
         entry: blog[0],
         header: header[0][0],
@@ -91,19 +98,20 @@ class Blog extends React.Component {
                 <div className='blog-list' key={bloglist.title}>
                   {bloglist.featured_image && (
                     <Link to={bloglist.url}>
-                      <img alt='blog img' className='blog-list-img' src={bloglist.featured_image.url} />
+                      <img {...bloglist.featured_image.$?.url} alt='blog img' className='blog-list-img' src={bloglist.featured_image.url} />
                     </Link>
                   )}
-                  <div className='blog-content'>
+                  <div className='blog-content' {...bloglist.$?.blog}>
                     {bloglist.title && (
                       <Link to={bloglist.url}>
-                        <h3>{bloglist.title}</h3>
+                        <h3 {...bloglist.$?.title}>{bloglist.title}</h3>
                       </Link>
                     )}
-                    <p>
-                      {moment(bloglist.date).format('ddd, MMM D YYYY')}, <strong>{bloglist.author[0].title}</strong>
+                    <p {...bloglist.$?.date}>
+                      {moment(bloglist.date).format('ddd, MMM D YYYY')}, <strong {...bloglist.author[0].$?.title}>{bloglist.author[0].title}</strong>
                     </p>
-                    {bloglist.body && parse(bloglist.body.slice(0, 300))}
+                    <div {...bloglist.$?.body}>{bloglist.body && parse(bloglist.body.slice(0, 300))}</div>
+
                     {bloglist.url ? (
                       <Link to={bloglist.url}>
                         <span>{'Read more -->'}</span>
@@ -116,7 +124,7 @@ class Blog extends React.Component {
               ))}
             </div>
             <div className='blog-column-right'>
-              {entry.page_components[1].widget && <h2>{entry.page_components[1].widget.title_h2} </h2>}
+              {entry.page_components[1].widget && <h2 {...entry.page_components[1].widget.$?.title_h2}>{entry.page_components[1].widget.title_h2} </h2>}
               <ArchiveRelative blogs={archived} />
             </div>
           </div>
