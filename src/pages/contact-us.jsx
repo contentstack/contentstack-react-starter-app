@@ -18,14 +18,22 @@ class ContactUs extends React.Component {
   async componentDidMount() {
     try {
       const { location } = this.props;
-      const result = await Stack.getEntryByUrl("page", location.pathname, [
-        "page_components.from_blog.featured_blogs",
-      ]);
-      const header = await Stack.getEntry(
-        "header",
-        "navigation_menu.page_reference"
-      );
-      const footer = await Stack.getEntry("footer");
+      const result = await Stack.getEntryByUrl({
+        contentTypeUid: "page",
+        entryUrl: location.pathname,
+        jsonRtePath: [
+          "page_components.section_with_html_code.description",
+        ],
+      });
+      const header = await Stack.getEntry({
+        contentTypeUid: "header",
+        referenceFieldPath: ["navigation_menu.page_reference"],
+        jsonRtePath: ["notification_bar.announcement_text"],
+      });
+      const footer = await Stack.getEntry({
+        contentTypeUid: "footer",
+        jsonRtePath: ["copyright"],
+      });
       this.setState({
         entry: result[0],
         header: header[0][0],
