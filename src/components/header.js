@@ -1,7 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import parse from 'html-react-parser';
-import devtoolIcon from '../images/devtools.gif';
+import Tooltip from "../components/too-tip";
+
+
 
 export default function Header(props) {
   const { header } = props;
@@ -10,9 +12,6 @@ export default function Header(props) {
     <header className='header'>
       <div className='note-div' {...header.notification_bar.$?.announcement_text}>
         {header.notification_bar.show_announcement ? parse(header.notification_bar.announcement_text) : <div style={{ visibility: 'hidden' }}>Devtools section</div>}
-        <span className='devtools' data-bs-toggle='modal' data-bs-target='#staticBackdrop'>
-          <img src={devtoolIcon} alt='devtools-icon' title='Json Preview' />
-        </span>
       </div>
       <div className='max-width header-div'>
         <div className='wrapper-logo'>
@@ -35,6 +34,16 @@ export default function Header(props) {
             ))}
           </ul>
         </nav>
+        <div className="json-preview">
+          <Tooltip content="JSON Preview" direction="top">
+            <span
+              data-bs-toggle="modal"
+              data-bs-target="#staticBackdrop"
+            >
+              <img src="/json.svg" alt="JSON Preview icon" />
+            </span>
+          </Tooltip>
+        </div>
       </div>
     </header>
   );

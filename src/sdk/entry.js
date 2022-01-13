@@ -11,7 +11,7 @@ const Stack = contentstack.Stack({
   live_preview: {
     management_token: process.env.REACT_APP_CONTENTSTACK_MANAGEMENT_TOKEN ? process.env.REACT_APP_CONTENTSTACK_MANAGEMENT_TOKEN : '',
     enable: true,
-    host: process.env.REACT_APP_CONTENTSTACK_CUSTOM_HOST ? process.env.REACT_APP_CONTENTSTACK_CUSTOM_HOST : '',
+    host: process.env.REACT_APP_CONTENTSTACK_API_HOST ? process.env.REACT_APP_CONTENTSTACK_API_HOST : '',
   },
   clientUrlParams: {
     protocol: 'https',
@@ -24,8 +24,8 @@ const Stack = contentstack.Stack({
  */
 ContentstackLivePreview.init(Stack);
 
-if (process.env.REACT_APP_CONTENTSTACK_CUSTOM_HOST) {
-  Stack.setHost(process.env.REACT_APP_CONTENTSTACK_CUSTOM_HOST);
+if (process.env.REACT_APP_CONTENTSTACK_API_HOST) {
+  Stack.setHost(process.env.REACT_APP_CONTENTSTACK_API_HOST);
 }
 
 const renderOption = {

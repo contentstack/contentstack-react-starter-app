@@ -3,7 +3,7 @@ import Stack from '../sdk/entry';
 import { onEntryChange } from '../sdk/entry';
 
 import Layout from '../components/layout';
-import RenderComponenets from '../components/render-components';
+import RenderComponents from '../components/render-components';
 import { addEditableTags } from '@contentstack/utils';
 
 class Home extends React.Component {
@@ -34,7 +34,7 @@ class Home extends React.Component {
         contentTypeUid: 'footer',
         jsonRtePath: ['copyright'],
       });
-      if (process.env.REACT_APP_LIVE_EDITING_TAGS === 'true') {
+      if (process.env.REACT_APP_CONTENTSTACK_LIVE_EDIT_TAGS === 'true') {
         addEditableTags(result[0], 'page', true);
         addEditableTags(header[0][0], 'header', true);
         addEditableTags(footer[0][0], 'footer', true);
@@ -53,7 +53,12 @@ class Home extends React.Component {
   }
 
   componentDidMount() {
-    onEntryChange(() => this.fetchData());
+    this.fetchData();
+    onEntryChange(() => {
+      if (process.env.REACT_APP_CONTENTSTACK_LIVE_PREVIEW === 'true') {
+        return this.fetchData();
+      }
+    });
   }
 
   render() {
@@ -62,7 +67,7 @@ class Home extends React.Component {
     if (!error.errorStatus && entry) {
       return (
         <Layout header={header} footer={footer} page={entry} activeTab='Home'>
-          <RenderComponenets pageComponents={entry.page_components} contentTypeUid='page' entryUid={entry.uid} locale={entry.locale} />
+          <RenderComponents pageComponents={entry.page_components} contentTypeUid='page' entryUid={entry.uid} locale={entry.locale} />
         </Layout>
       );
     }

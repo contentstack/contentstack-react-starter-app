@@ -24,7 +24,7 @@ class BlogPost extends React.Component {
   async fetchData() {
     try {
       let { blog, banner, header, footer } = await this.getBlogs();
-      if (process.env.REACT_APP_LIVE_EDITING_TAGS === 'true') {
+      if (process.env.REACT_APP_CONTENTSTACK_LIVE_EDIT_TAGS === 'true') {
         addEditableTags(blog[0], 'blog_post', true);
         addEditableTags(banner[0], 'page', true);
         addEditableTags(header[0][0], 'header', true);
@@ -78,7 +78,12 @@ class BlogPost extends React.Component {
   }
 
   componentDidMount() {
-    onEntryChange(() => this.fetchData());
+    this.fetchData();
+    onEntryChange(() => {
+      if (process.env.REACT_APP_CONTENTSTACK_LIVE_PREVIEW === 'true') {
+        return this.fetchData();
+      }
+    });
   }
 
   async componentDidUpdate(prevProps) {

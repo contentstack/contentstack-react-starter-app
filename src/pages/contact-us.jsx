@@ -34,7 +34,7 @@ class ContactUs extends React.Component {
         contentTypeUid: 'footer',
         jsonRtePath: ['copyright'],
       });
-      if (process.env.REACT_APP_LIVE_EDITING_TAGS === 'true') {
+      if (process.env.REACT_APP_CONTENTSTACK_LIVE_EDIT_TAGS === 'true') {
         addEditableTags(result[0], 'page', true);
         addEditableTags(header[0][0], 'header', true);
         addEditableTags(footer[0][0], 'footer', true);
@@ -53,7 +53,12 @@ class ContactUs extends React.Component {
   }
 
   componentDidMount() {
-    onEntryChange(() => this.fetchData());
+    this.fetchData();
+    onEntryChange(() => {
+      if (process.env.REACT_APP_CONTENTSTACK_LIVE_PREVIEW === 'true') {
+        return this.fetchData();
+      }
+    });
   }
 
   render() {

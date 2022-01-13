@@ -51,7 +51,7 @@ class Blog extends React.Component {
 
       const archive = [];
       const blogLists = [];
-      
+
       result[0].forEach((blogs) => {
         if (blogs.is_archived) {
           archive.push(blogs);
@@ -59,7 +59,7 @@ class Blog extends React.Component {
           blogLists.push(blogs);
         }
       });
-      if (process.env.REACT_APP_LIVE_EDITING_TAGS === 'true') {
+      if (process.env.REACT_APP_CONTENTSTACK_LIVE_EDIT_TAGS === 'true') {
         result[0].forEach(async (blog) => await addEditableTags(blog, 'blog_post', true));
         addEditableTags(blog[0], 'page', true);
         addEditableTags(header[0][0], 'header', true);
@@ -81,7 +81,12 @@ class Blog extends React.Component {
   }
 
   componentDidMount() {
-    onEntryChange(() => this.fetchData());
+    this.fetchData();
+    onEntryChange(() => {
+      if (process.env.REACT_APP_CONTENTSTACK_LIVE_PREVIEW === 'true') {
+        return this.fetchData();
+      }
+    });
   }
 
   render() {
