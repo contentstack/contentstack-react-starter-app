@@ -5,8 +5,9 @@
   "private": true,
   "author": "Contentstack",
   "dependencies": {
-    "@contentstack/utils": "^1.1.0",
-    "contentstack": "^3.14.0",
+    "@contentstack/live-preview-utils": "1.0.1",
+    "@contentstack/utils": "1.1.1",
+    "contentstack": "3.15.0",
     "html-react-parser": "^1.4.0",
     "moment": "^2.29.1",
     "react": "^17.0.1",
