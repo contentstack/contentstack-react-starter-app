@@ -37,7 +37,7 @@ const DevTools = ({ response }) => {
               JSON Preview
             </h2>
             <span className='json-copy' onClick={() => copyObject(JSON.stringify(filteredJson))} aria-hidden='true'>
-              <Tooltip content={forceUpdate === 0 ? 'Copy' : 'Copied'} direction='top' dynamic status={forceUpdate}>
+              <Tooltip content={forceUpdate === 0 ? 'Copy' : 'Copied'} direction='top' delay={200} dynamic status={forceUpdate}>
                 <img src='/copy.svg' alt='copy icon' />
               </Tooltip>
             </span>
