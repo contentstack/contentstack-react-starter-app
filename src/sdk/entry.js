@@ -9,7 +9,6 @@ const Stack = contentstack.Stack({
 });
 
 if (process.env.REACT_APP_CONTENTSTACK_API_HOST) {
-  console.log(process.env.REACT_APP_CONTENTSTACK_API_HOST);
   Stack.setHost(process.env.REACT_APP_CONTENTSTACK_API_HOST);
 }
 
