@@ -1,6 +1,0 @@
-fileignoreconfig:
-- filename: package-lock.json
-  checksum: 6ac19f86cb5e6e9fd018b92466a95c255b17a6235d564679a219bdaea74e5394
-- filename: src/pages/blog.jsx
-  checksum: e19d61322fbabaf2c8718a6db246093f18a32745bc0e5f0c7899535d16ad8d0c
-version: ""
