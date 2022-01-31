@@ -13,16 +13,19 @@ const Stack = contentstack.Stack({
     enable: true,
     host: process.env.REACT_APP_CONTENTSTACK_API_HOST ? process.env.REACT_APP_CONTENTSTACK_API_HOST : '',
   },
-  clientUrlParams: {
-    protocol: 'https',
-    host: process.env.REACT_APP_CONTENTSTACK_APP_HOST ? process.env.REACT_APP_CONTENTSTACK_APP_HOST : '',
-  },
 });
 
 /**
  * initialize live preview
  */
-ContentstackLivePreview.init(Stack);
+ContentstackLivePreview.init({
+  enable: true,
+  stackSdk: Stack,
+  clientUrlParams: {
+    host: process.env.REACT_APP_CONTENTSTACK_APP_HOST ? process.env.REACT_APP_CONTENTSTACK_APP_HOST : '',
+  },
+  ssr: false,
+});
 
 if (process.env.REACT_APP_CONTENTSTACK_API_HOST) {
   Stack.setHost(process.env.REACT_APP_CONTENTSTACK_API_HOST);
