@@ -9,6 +9,8 @@ import Error from "./pages/error.jsx";
 import "./styles/third-party.css";
 import "./styles/style.css";
 import "./styles/modal.css";
+import "@contentstack/live-preview-utils/dist/main.css";
+
 
 function App() {
   return (

@@ -7,12 +7,9 @@ export default function BlogSection(props) {
   return (
     <div className='community-section'>
       <div className='community-head'>
-        {fromBlog.title_h2 && <h2>{fromBlog.title_h2}</h2>}
+        {fromBlog.title_h2 && <h2 {...fromBlog.$?.title_h2}>{fromBlog.title_h2}</h2>}
         {fromBlog.view_articles && (
-          <Link
-            to={fromBlog.view_articles.href}
-            className='btn secondary-btn article-btn'
-          >
+          <Link to={fromBlog.view_articles.href} className='btn secondary-btn article-btn' {...fromBlog.view_articles.$?.title}>
             {fromBlog.view_articles.title}
           </Link>
         )}
@@ -20,16 +17,11 @@ export default function BlogSection(props) {
       <div className='home-featured-blogs'>
         {fromBlog.featured_blogs.map((blog) => (
           <div className='featured-blog' key={blog.title}>
-            {blog.featured_image && (
-              <img
-                src={blog.featured_image.url}
-                alt={blog.featured_image.filename}
-                className='blog-post-img'
-              />
-            )}
+            {blog.featured_image && <img src={blog.featured_image.url} alt={blog.featured_image.filename} className='blog-post-img' {...blog.featured_image.$?.url} />}
             <div className='featured-content'>
-              {blog.title && <h3>{blog.title}</h3>}
-              {blog.body && parse(blog.body.slice(0, 300))}
+              {blog.title && <h3 {...blog.$?.title}>{blog.title}</h3>}
+
+              <div {...blog.$?.body}>{blog.body && parse(blog.body.slice(0, 300))}</div>
               {blog.url && (
                 <Link to={blog.url} className='blogpost-readmore'>
                   {'Read More -->'}

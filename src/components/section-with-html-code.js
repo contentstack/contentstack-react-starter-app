@@ -7,10 +7,10 @@ export default function SectionWithHtmlCode(props) {
     return (
       <div className='contact-page-section max-width'>
         <div className='contact-page-content'>
-          {embedObject.title && <h1>{embedObject.title}</h1>}
-          {embedObject.description && parse(embedObject.description)}
+          {embedObject.title && <h1 {...embedObject.$?.title}>{embedObject.title}</h1>}
+          <div {...embedObject.$?.description}>{embedObject.description && parse(embedObject.description)}</div>
         </div>
-        <div className='contact-page-form'>
+        <div className='contact-page-form' {...embedObject.$?.html_code}>
           {embedObject.html_code && parse(embedObject.html_code)}
         </div>
       </div>
@@ -18,10 +18,12 @@ export default function SectionWithHtmlCode(props) {
   }
   return (
     <div className='contact-maps-section max-width'>
-      <div className='maps-details'>{parse(embedObject.html_code)}</div>
+      <div className='maps-details' {...embedObject.$?.html_code}>
+        {parse(embedObject.html_code)}
+      </div>
       <div className='contact-maps-content'>
-        {embedObject.title ? <h2>{embedObject.title}</h2> : ''}
-        {embedObject.description && parse(embedObject.description)}
+        {embedObject.title ? <h2 {...embedObject.$?.title}>{embedObject.title}</h2> : ''}
+        <div {...embedObject.$?.description}> {embedObject.description && parse(embedObject.description)}</div>
       </div>
     </div>
   );
