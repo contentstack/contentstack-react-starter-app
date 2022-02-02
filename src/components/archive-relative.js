@@ -8,9 +8,9 @@ export default function ArchiveRelative(props) {
     <>
       {blogs?.map((blog) => (
         <Link to={blog.url} key={blog.title}>
-          <div>
-            <h4>{blog.title}</h4>
-            {parse(blog.body.slice(0, 80))}
+          <div {...blog.$?.body}>
+            <h4 {...blog.$?.title}>{blog.title}</h4>
+            <div {...blog.$?.body}>{parse(blog.body.slice(0, 80))}</div>
           </div>
         </Link>
       ))}
