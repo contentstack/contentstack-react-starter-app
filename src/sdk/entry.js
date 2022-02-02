@@ -8,8 +8,8 @@ const Stack = contentstack.Stack({
   region: process.env.REACT_APP_CONTENTSTACK_REGION ? process.env.REACT_APP_CONTENTSTACK_REGION : "us",
 });
 
-if (process.env.REACT_APP_CONTENTSTACK_CUSTOM_HOST) {
-  Stack.setHost(process.env.REACT_APP_CONTENTSTACK_CUSTOM_HOST);
+if (process.env.REACT_APP_CONTENTSTACK_API_HOST) {
+  Stack.setHost(process.env.REACT_APP_CONTENTSTACK_API_HOST);
 }
 
 const renderOption = {
