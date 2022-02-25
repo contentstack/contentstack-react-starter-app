@@ -15,7 +15,6 @@ function App() {
   const [getEntry, setEntry] = useState();
 
   function getPageRes(response) {
-    console.log("app...", response);
     setEntry(response);
   }
   return (
