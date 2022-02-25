@@ -30,7 +30,7 @@ export default function Home({ entry }) {
   }, []);
 
   useEffect(() => {
-    console.log('error...', error);
+    console.error('error...', error);
     error && history('/404');
   }, [error]);
 

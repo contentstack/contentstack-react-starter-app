@@ -31,7 +31,6 @@ export default function BlogPost(props) {
   }
 
   useEffect(() => {
-    console.log('in blog post');
     onEntryChange(fetchData);
   }, []);
   useEffect(() => {

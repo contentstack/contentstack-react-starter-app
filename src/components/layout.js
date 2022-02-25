@@ -68,7 +68,7 @@ export default function Layout({ entry }) {
   }, []);
 
   useEffect(() => {
-    console.log('error...', error);
+    console.error('error...', error);
     error && history('/error');
   }, [error]);
 
