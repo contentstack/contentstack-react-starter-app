@@ -1,137 +1,113 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import moment from 'moment';
 import parse from 'html-react-parser';
-import Stack from '../sdk/entry';
-import Layout from '../components/layout';
 
 import ArchiveRelative from '../components/archive-relative';
 import RenderComponents from '../components/render-components';
 import { onEntryChange } from '../sdk/entry';
-import { addEditableTags } from '@contentstack/utils';
+import { getPageRes, getBlogPostRes } from '../helper';
+import Skeleton from 'react-loading-skeleton';
 
-class BlogPost extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      entry: undefined,
-      banner: undefined,
-      header: undefined,
-      footer: undefined,
-      error: { errorStatus: false, errorCode: undefined, errorData: undefined },
-    };
-  }
+export default function BlogPost(props) {
+  const { entry } = props;
+  const { blogId } = useParams();
+  const history = useNavigate();
+  const [getEntry, setEntry] = useState({ banner: {}, post: {} });
+  const [error, setError] = useState(false);
 
-  async fetchData() {
+  async function fetchData() {
     try {
-      let { blog, banner, header, footer } = await this.getBlogs();
-      if (process.env.REACT_APP_CONTENTSTACK_LIVE_EDIT_TAGS === 'true') {
-        addEditableTags(blog[0], 'blog_post', true);
-        addEditableTags(banner[0], 'page', true);
-        addEditableTags(header[0][0], 'header', true);
-        addEditableTags(footer[0][0], 'footer', true);
-      }
-      this.setState({
-        entry: blog[0],
-        banner: banner[0],
-        header: header[0][0],
-        footer: footer[0][0],
-        error: { errorStatus: false },
-      });
-    } catch (error) {
-      this.setState({
-        error: { errorStatus: true, errorCode: 404, errorData: error },
-      });
-    }
-  }
-
-  async getBlogs() {
-    try {
-      const banner = await Stack.getEntryByUrl({
-        contentTypeUid: 'page',
-        entryUrl: '/blog',
-      });
-      const { location } = this.props;
-      const blog = await Stack.getEntryByUrl({
-        contentTypeUid: 'blog_post',
-        entryUrl: location.pathname,
-        referenceFieldPath: ['author', 'related_post'],
-        jsonRtePath: ['body', 'related_post.body'],
-      });
-      const header = await Stack.getEntry({
-        contentTypeUid: 'header',
-        referenceFieldPath: ['navigation_menu.page_reference'],
-        jsonRtePath: ['notification_bar.announcement_text'],
-      });
-      const footer = await Stack.getEntry({
-        contentTypeUid: 'footer',
-        jsonRtePath: ['copyright'],
-      });
-      return {
-        blog,
-        banner,
-        header,
-        footer,
-      };
+      const entryUrl = blogId ? `/blog/${blogId}` : '/';
+      const banner = await getPageRes('/blog');
+      const post = await getBlogPostRes(entryUrl);
+      (!banner || !post) && setError(true);
+      setEntry({ banner, post });
+      entry({ page: banner, blogPost: post });
     } catch (error) {
       console.error(error);
+      setError(true);
     }
   }
 
-  componentDidMount() {
-    this.fetchData();
-    onEntryChange(() => {
-      if (process.env.REACT_APP_CONTENTSTACK_LIVE_PREVIEW === 'true') {
-        return this.fetchData();
-      }
-    });
-  }
+  useEffect(() => {
+    console.log('in blog post');
+    onEntryChange(fetchData);
+  }, []);
+  useEffect(() => {
+    error && history('/404');
+  }, [error]);
 
-  async componentDidUpdate(prevProps) {
-    try {
-      if (prevProps.match.params.uid !== this.props.match.params.uid) {
-        let { blog, banner, header, footer } = await this.getBlogs();
-        this.setState({
-          entry: blog[0],
-          banner: banner[0],
-          header: header[0][0],
-          footer: footer[0][0],
-          error: { errorStatus: false },
-        });
-      }
-    } catch (error) {
-      console.log(error);
+  useEffect(() => {
+    if (getEntry.post.url !== `/blog/${blogId}`) {
+      fetchData();
     }
-  }
+  }, [getEntry.post, blogId]);
 
-  render() {
-    const { header, footer, entry, error, banner } = this.state;
-    const { history } = this.props;
-    if (!error.errorStatus && entry) {
-      return (
-        <Layout header={header} footer={footer} page={banner} blogpost={entry} activeTab='Blog'>
-          <RenderComponents pageComponents={banner.page_components} blogsPage contentTypeUid='blog_post' entryUid={entry.uid} locale={entry.locale} />
-          <div className='blog-container'>
-            <article className='blog-detail'>
-              <h2 {...entry.$?.title}>{entry.title ? entry.title : ''}</h2>
-              <p {...entry.$?.date}>
-                {moment(entry.date).format('ddd, MMM D YYYY')}, <strong {...entry.author[0].$?.title}>{entry.author[0].title}</strong>
-              </p>
-              <div {...entry.$?.body}>{parse(entry.body)}</div>
-            </article>
-            <div className='blog-column-right'>
-              <div className='related-post'>
-                {banner.page_components[2].widget && <h2 {...banner.page_components[2].widget.$?.title_h2}>{banner.page_components[2].widget.title_h2}</h2>}
-                {entry.related_post && <ArchiveRelative {...entry.$?.related_post} blogs={entry.related_post} />}
-              </div>
-            </div>
+  const { post, banner } = getEntry;
+  return (
+    <>
+      {banner ? (
+        <RenderComponents
+          pageComponents={banner.page_components}
+          blogsPage
+          contentTypeUid='blog_post'
+          entryUid={banner.uid}
+          locale={banner.locale}
+        />
+      ) : (
+        <Skeleton height={400} />
+      )}
+
+      <div className='blog-container'>
+        <article className='blog-detail'>
+          {post.title ? (
+            <h2 {...post.$?.title}>{post.title}</h2>
+          ) : (
+            <h2>
+              <Skeleton />
+            </h2>
+          )}
+          {post.date ? (
+            <p {...post.$?.date}>
+              {moment(post.date).format('ddd, MMM D YYYY')},{' '}
+              <strong {...post.author[0].$?.title}>
+                {post.author[0].title}
+              </strong>
+            </p>
+          ) : (
+            <p>
+              <Skeleton width={300}/>
+            </p>
+          )}
+          {post.body ? (
+            <div {...post.$?.body}>{parse(post.body)}</div>
+          ) : (
+            <Skeleton height={800} width={600} />
+          )}
+        </article>
+        <div className='blog-column-right'>
+          <div className='related-post'>
+            {Object.keys(banner).length && banner.page_components[2].widget ? (
+              <h2 {...banner?.page_components[2].widget.$?.title_h2}>
+                {banner?.page_components[2].widget.title_h2}
+              </h2>
+            ) : (
+              <h2>
+                <Skeleton />
+              </h2>
+            )}
+            {post.related_post ? (
+              <ArchiveRelative
+                {...post.$?.related_post}
+                blogs={post.related_post}
+              />
+            ) : (
+              <Skeleton width={300} height={500} />
+            )}
           </div>
-        </Layout>
-      );
-    }
-    if (error.errorStatus) {
-      history.push('/error', [error]);
-    }
-    return '';
-  }
+        </div>
+      </div>
+    </>
+  );
 }
-export default BlogPost;
