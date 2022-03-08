@@ -36,7 +36,7 @@ export default function RenderComponents(props) {
           );
         }
         if (component.section_with_buckets) {
-          return about ? (
+          return component.section_with_buckets.bucket_tabular ? (
             <AboutSectionBucket
               sectionWithBuckets={component.section_with_buckets}
               key={`component-${key}`}
