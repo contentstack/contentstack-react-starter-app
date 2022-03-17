@@ -284,7 +284,7 @@ footer a {
 .blog-list > a {
   text-align: center;
   width: 40%;
-  background: #efefef;
+  background: #f2f2f2;
   display: inline-flex;
 }
 
@@ -635,9 +635,16 @@ footer a {
 }
 
 .error-page {
+  position: relative;
+  height: 65vh;
   text-align: center;
-  min-height: 400px;
-  padding-top: 80px;
+}
+
+.error-message {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .header .menu-btn {

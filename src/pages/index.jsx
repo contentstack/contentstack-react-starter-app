@@ -1,81 +1,53 @@
-import React from 'react';
-import Stack from '../sdk/entry';
+import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import { onEntryChange } from '../sdk/entry';
 
-import Layout from '../components/layout';
 import RenderComponents from '../components/render-components';
-import { addEditableTags } from '@contentstack/utils';
+import { getPageRes } from '../helper';
+import Skeleton from 'react-loading-skeleton';
 
-class Home extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      entry: undefined,
-      header: undefined,
-      footer: undefined,
-      error: { errorStatus: false, errorCode: undefined, errorData: undefined },
-    };
-  }
+export default function Home({ entry }) {
+  const params = useParams();
+  const entryUrl = params.page ? `/${params.page}` : '/';
+  const history = useNavigate();
+  const [getEntries, setEntries] = useState({});
+  const [error, setError] = useState(false);
 
-  async fetchData() {
+  async function fetchData() {
     try {
-      const result = await Stack.getEntryByUrl({
-        contentTypeUid: 'page',
-        entryUrl: this.props.location.pathname,
-        referenceFieldPath: ['page_components.from_blog.featured_blogs'],
-        jsonRtePath: ['page_components.from_blog.featured_blogs.body', 'page_components.section_with_buckets.buckets.description'],
-      });
-      const header = await Stack.getEntry({
-        contentTypeUid: 'header',
-        referenceFieldPath: ['navigation_menu.page_reference'],
-        jsonRtePath: ['notification_bar.announcement_text'],
-      });
-      const footer = await Stack.getEntry({
-        contentTypeUid: 'footer',
-        jsonRtePath: ['copyright'],
-      });
-      if (process.env.REACT_APP_CONTENTSTACK_LIVE_EDIT_TAGS === 'true') {
-        addEditableTags(result[0], 'page', true);
-        addEditableTags(header[0][0], 'header', true);
-        addEditableTags(footer[0][0], 'footer', true);
-      }
-      this.setState({
-        entry: result[0],
-        header: header[0][0],
-        footer: footer[0][0],
-        error: { errorStatus: false },
-      });
+      const result = await getPageRes(entryUrl);
+      !result && setError(true);
+      setEntries({ ...result });
+      entry({ page: result });
     } catch (error) {
-      this.setState({
-        error: { errorStatus: true, errorCode: 404, errorData: error },
-      });
+      setError(true);
+      console.error(error);
     }
   }
 
-  componentDidMount() {
-    this.fetchData();
-    onEntryChange(() => {
-      if (process.env.REACT_APP_CONTENTSTACK_LIVE_PREVIEW === 'true') {
-        return this.fetchData();
-      }
-    });
-  }
+  useEffect(() => {
+    onEntryChange(fetchData);
+  }, []);
 
-  render() {
-    const { header, footer, entry, error } = this.state;
-    const { history } = this.props;
-    if (!error.errorStatus && entry) {
-      return (
-        <Layout header={header} footer={footer} page={entry} activeTab='Home'>
-          <RenderComponents pageComponents={entry.page_components} contentTypeUid='page' entryUid={entry.uid} locale={entry.locale} />
-        </Layout>
-      );
-    }
+  useEffect(() => {
+    console.error('error...', error);
+    error && history('/404');
+  }, [error]);
 
-    if (error.errorStatus) {
-      history.push('/error', [error]);
+  useEffect(() => {
+    if (getEntries.url !== entryUrl) {
+      fetchData();
     }
-    return '';
-  }
+  }, [getEntries, entryUrl]);
+
+  return Object.keys(getEntries).length ? (
+    <RenderComponents
+      pageComponents={getEntries?.page_components}
+      contentTypeUid='page'
+      entryUid={getEntries?.uid}
+      locale={getEntries?.locale}
+    />
+  ) : (
+    <Skeleton count={5} height={400} />
+  );
 }
-export default Home;
