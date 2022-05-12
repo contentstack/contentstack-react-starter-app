@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ReactJson from 'react-json-view';
 import Tooltip from '../components/too-tip';
 
-function filterObject(inputObject) {
+function filterObject(inputObject: any) {
   const unWantedProps = ['uid', '_version', 'ACL', '_in_progress', 'created_at', 'created_by', 'updated_at', 'updated_by', 'publish_details'];
   for (const key in inputObject) {
     unWantedProps.includes(key) && delete inputObject[key];
@@ -13,11 +13,11 @@ function filterObject(inputObject) {
   }
   return inputObject;
 }
-const DevTools = ({ response }) => {
+const DevTools = ({ response }: any) => {
   const filteredJson = filterObject(response);
   const [forceUpdate, setForceUpdate] = useState(0);
 
-  function copyObject(object) {
+  function copyObject(object: any) {
     navigator.clipboard.writeText(object);
     setForceUpdate(1);
   }
@@ -29,7 +29,7 @@ const DevTools = ({ response }) => {
   }, [forceUpdate]);
 
   return (
-    <div className='modal fade' id='staticBackdrop' data-bs-backdrop='static' data-bs-keyboard='false' tabIndex='-1' aria-labelledby='staticBackdropLabel' aria-hidden='true'>
+    <div className='modal fade' id='staticBackdrop' data-bs-backdrop='static' data-bs-keyboard='false' tabIndex={-1} aria-labelledby='staticBackdropLabel' aria-hidden='true'>
       <div className='modal-dialog .modal-lg modal-dialog-centered modal-dialog-scrollable'>
         <div className='modal-content'>
           <div className='modal-header'>

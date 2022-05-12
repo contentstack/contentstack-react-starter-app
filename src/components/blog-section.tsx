@@ -1,8 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import parse from 'html-react-parser';
+import { FeaturedBlogProps } from "../typescript/blog";
 
-export default function BlogSection(props) {
+export default function BlogSection(props: FeaturedBlogProps) {
+
   const fromBlog = props.blogs;
   return (
     <div className='community-section'>

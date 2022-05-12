@@ -1,7 +1,8 @@
 import React from 'react';
+import { TeamProps } from "../typescript/section";
 
-export default function TeamSection(props) {
-  const { ourTeam } = props;
+export default function TeamSection({ ourTeam }: {ourTeam : TeamProps}) {
+
   return (
     <div className='about-team-section'>
       <div className='team-head-section'>

@@ -5,15 +5,15 @@ import parse from 'html-react-parser';
 
 import ArchiveRelative from '../components/archive-relative';
 import RenderComponents from '../components/render-components';
-import { onEntryChange } from '../sdk/entry';
-import { getPageRes, getBlogPostRes } from '../helper';
+import { onEntryChange } from '../sdk/entry.d';
+import { getPageRes, getBlogPostRes } from '../helper/index.d';
 import Skeleton from 'react-loading-skeleton';
+import { Prop, Banner, Post } from "../typescript/pages";
 
-export default function BlogPost(props) {
-  const { entry } = props;
+export default function BlogPost({ entry }: Prop) {
   const { blogId } = useParams();
   const history = useNavigate();
-  const [getEntry, setEntry] = useState({ banner: {}, post: {} });
+  const [getEntry, setEntry] = useState({ banner: {} as Banner, post: {} as Post});
   const [error, setError] = useState(false);
 
   async function fetchData() {
