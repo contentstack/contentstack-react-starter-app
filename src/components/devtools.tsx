@@ -17,7 +17,7 @@ const DevTools = ({ response }: any) => {
   const filteredJson = filterObject(response);
   const [forceUpdate, setForceUpdate] = useState(0);
 
-  function copyObject(object: any) {
+  function copyObject(object: string) {
     navigator.clipboard.writeText(object);
     setForceUpdate(1);
   }
