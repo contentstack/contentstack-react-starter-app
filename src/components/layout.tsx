@@ -31,8 +31,8 @@ export default function Layout({ entry }: {entry: EntryProps}) {
       const footer = await getFooterRes();
       const allEntry = await getAllEntries();
       !header || (!footer && setError(true));
-      let navHeaderList = header.navigation_menu;
-      let navFooterList = footer.navigation.link;
+      const navHeaderList = header.navigation_menu;
+      const navFooterList = footer.navigation.link;
       if (allEntry.length !== header.navigation_menu.length) {
         allEntry.forEach((entry: Entry) => {
           const hFound = header.navigation_menu.find(
