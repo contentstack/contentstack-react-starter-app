@@ -16,7 +16,7 @@ export default function Header({ header, navMenu }: {header: HeaderProps, navMen
           className='note-div'
           {...header.notification_bar.$?.announcement_text}
         >
-          {header.notification_bar.show_announcement &&
+          {header.notification_bar.show_announcement && header.notification_bar.announcement_text &&
             parse(header.notification_bar.announcement_text)}
         </div>
       ) : (
