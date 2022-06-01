@@ -27,4 +27,6 @@ We have created an in-depth tutorial on how you can create a React.js starter we
 
 Read Contentstack [docs](https://www.contentstack.com/docs/)
 
+Region support [docs](https://www.contentstack.com/docs/developers/selecting-region-in-contentstack-starter-apps)
+
 Learn about [React.js](https://reactjs.org/docs/getting-started.html)
