@@ -1,8 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { CardProps } from "../typescript/card";
 
-export default function CardSection(props) {
-  const { cards } = props;
+export default function CardSection({ cards }: CardProps) {
+
   return (
     <div className='demo-section'>
       {cards?.map((card) => (

@@ -1,8 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Skeleton from 'react-loading-skeleton';
+import { BannerProps } from "../typescript/banner";
 
-export default function HeroBanner(props) {
+export default function HeroBanner(props: BannerProps) {
   const banner = props.hero_banner;
   return (
     <div

@@ -3,8 +3,9 @@ import { Link, NavLink, useMatch, useResolvedPath } from 'react-router-dom';
 import parse from 'html-react-parser';
 import Tooltip from '../components/too-tip';
 import Skeleton from 'react-loading-skeleton';
+import { HeaderProps,HeadermenuProps } from "../typescript/layout";
 
-export default function Header({ header, navMenu }) {
+export default function Header({ header, navMenu }: {header: HeaderProps, navMenu: HeadermenuProps}) {
   let resolved;
   let match;
 
@@ -15,7 +16,7 @@ export default function Header({ header, navMenu }) {
           className='note-div'
           {...header.notification_bar.$?.announcement_text}
         >
-          {header.notification_bar.show_announcement &&
+          {header.notification_bar.show_announcement && header.notification_bar.announcement_text &&
             parse(header.notification_bar.announcement_text)}
         </div>
       ) : (
@@ -74,7 +75,7 @@ export default function Header({ header, navMenu }) {
           </ul>
         </nav>
         <div className='json-preview'>
-          <Tooltip content='JSON Preview' direction='top'>
+          <Tooltip content='JSON Preview' direction='top' dynamic={false} delay={200} status={0}>
             <span data-bs-toggle='modal' data-bs-target='#staticBackdrop'>
               <img src='/json.svg' alt='JSON Preview icon' />
             </span>

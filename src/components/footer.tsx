@@ -2,8 +2,9 @@ import React from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { NavLink, Link } from 'react-router-dom';
 import parse from 'html-react-parser';
+import { FooterProps,NavmenuProps, Social } from "../typescript/layout";
 
-export default function Footer({ footer, navMenu }) {
+export default function Footer({ footer, navMenu }: {footer: FooterProps, navMenu: NavmenuProps}) {
   return (
     <footer>
       <div className='max-width footer-div'>
@@ -44,7 +45,7 @@ export default function Footer({ footer, navMenu }) {
         <div className='col-quarter social-link'>
           <div className='social-nav'>
             {Object.keys(footer).length ? (
-              footer.social.social_share?.map((social) => (
+              footer.social.social_share?.map((social: Social) => (
                 <a
                   href={social.link.href}
                   title={social.link.title}
