@@ -9,13 +9,15 @@ import BlogSection from "./blog-section";
 import SectionBucket from "./section-bucket";
 import AboutSectionBucket from "./about-section-bucket";
 import SectionWithHtmlCode from "./section-with-html-code";
+import { RenderProps } from "../typescript/component";
 
-export default function RenderComponents(props) {
-  const { pageComponents, blogsPage, about, contentTypeUid, entryUid, locale } =
+export default function RenderComponents(props: RenderProps) {
+    
+  const { pageComponents, blogsPage, contentTypeUid, entryUid, locale } =
     props;
   return (
     <div data-pageref={entryUid} data-contenttype={contentTypeUid} data-locale={locale}>
-      {pageComponents?.map((component, key) => {
+      {pageComponents?.map((component, key: number) => {
         if (component.hero_banner) {
           return blogsPage ? (
             <BlogBanner
@@ -25,7 +27,6 @@ export default function RenderComponents(props) {
           ) : (
             <HeroBanner
               hero_banner={component.hero_banner}
-              title={about ? "about" : "home"}
               key={`component-${key}`}
             />
           );

@@ -1,4 +1,4 @@
-import Stack from '../sdk/entry';
+import Stack from '../sdk/entry.d';
 import { addEditableTags } from '@contentstack/utils';
 
 const liveEdit = process.env.REACT_APP_CONTENTSTACK_LIVE_EDIT_TAGS === 'true';

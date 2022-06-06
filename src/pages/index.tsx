@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { onEntryChange } from '../sdk/entry';
+import { onEntryChange } from '../sdk/entry.d';
 
 import RenderComponents from '../components/render-components';
-import { getPageRes } from '../helper';
+import { getPageRes } from '../helper/index.d';
 import Skeleton from 'react-loading-skeleton';
+import { PageEntry, Prop } from "../typescript/pages";
 
-export default function Home({ entry }) {
+
+export default function Home({ entry }: Prop) {
+
   const params = useParams();
   const entryUrl = params.page ? `/${params.page}` : '/';
   const history = useNavigate();
-  const [getEntries, setEntries] = useState({});
+  const [getEntries, setEntries] = useState({} as PageEntry);
   const [error, setError] = useState(false);
 
   async function fetchData() {

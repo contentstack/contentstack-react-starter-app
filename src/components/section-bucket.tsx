@@ -1,9 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import parse from 'html-react-parser';
+import { BucketProps } from "../typescript/section";
 
-export default function SectionBucket(props) {
-  const { section } = props;
+export default function SectionBucket({ section }: {section: BucketProps}) {
+
   return (
     <div className='member-main-section'>
       <div className='member-head'>

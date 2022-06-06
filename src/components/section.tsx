@@ -1,8 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { SectionProps } from "../typescript/section";
 
-export default function Section(props) {
-  const { section } = props;
+export default function Section({ section }: {section : SectionProps}) {
+
   function contentSection() {
     return (
       <div className='home-content' key='section-1'>

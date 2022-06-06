@@ -3,18 +3,20 @@ import { Outlet, useNavigate } from 'react-router-dom';
 import Header from './header';
 import Footer from './footer';
 import DevTools from './devtools';
-import { getHeaderRes, getFooterRes, getAllEntries } from '../helper';
-import { onEntryChange } from '../sdk/entry';
+import { getHeaderRes, getFooterRes, getAllEntries } from '../helper/index.d';
+import { onEntryChange } from '../sdk/entry.d';
+import { EntryProps, Entry, NavLink, Links, HeaderProps, FooterProps, NavmenuProps, HeadermenuProps} from "../typescript/layout";
 
-export default function Layout({ entry }) {
+export default function Layout({ entry }: {entry: EntryProps}) {
+
   const history = useNavigate();
   const [getLayout, setLayout] = useState({
-    header: {},
-    footer: {},
-    navHeaderList: [],
-    navFooterList: [],
+    header: {} as HeaderProps,
+    footer: {} as FooterProps,
+    navHeaderList: {} as HeadermenuProps,
+    navFooterList: {} as NavmenuProps,
   });
-  const mergeObjs = (...objs) => Object.assign({}, ...objs);
+  const mergeObjs = (...objs: any) => Object.assign({}, ...objs);
   const jsonObj = mergeObjs(
     { header: getLayout.header },
     { footer: getLayout.footer },
@@ -29,12 +31,12 @@ export default function Layout({ entry }) {
       const footer = await getFooterRes();
       const allEntry = await getAllEntries();
       !header || (!footer && setError(true));
-      let navHeaderList = header.navigation_menu;
-      let navFooterList = footer.navigation.link;
+      const navHeaderList = header.navigation_menu;
+      const navFooterList = footer.navigation.link;
       if (allEntry.length !== header.navigation_menu.length) {
-        allEntry.forEach((entry) => {
+        allEntry.forEach((entry: Entry) => {
           const hFound = header.navigation_menu.find(
-            (navLink) => navLink.label === entry.title
+            (navLink: NavLink) => navLink.label === entry.title
           );
           if (!hFound) {
             navHeaderList.push({
@@ -43,7 +45,7 @@ export default function Layout({ entry }) {
             });
           }
           const fFound = footer.navigation.link.find(
-            (link) => link.title === entry.title
+            (link: Links) => link.title === entry.title
           );
           if (!fFound) {
             navFooterList.push({ title: entry.title, href: entry.url });
@@ -63,7 +65,7 @@ export default function Layout({ entry }) {
     }
   }
 
-  useEffect(async () => {
+  useEffect(() => {
     onEntryChange(fetchData);
   }, []);
 
