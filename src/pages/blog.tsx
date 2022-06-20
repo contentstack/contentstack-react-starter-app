@@ -73,7 +73,7 @@ export default function Blog({ entry }: Prop) {
         </div>
         <div className="blog-column-right">
           {Object.keys(getEntry).length && getEntry.page_components[1].widget ? (
-            <h2 {...getEntry?.page_components[1].widget.$?.title_h2}>
+            <h2>
               {getEntry?.page_components[1].widget.title_h2}
             </h2>
           ) : (

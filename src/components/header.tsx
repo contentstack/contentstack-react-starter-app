@@ -14,7 +14,6 @@ export default function Header({ header, navMenu }: {header: HeaderProps, navMen
       {Object.keys(header).length ? (
         <div
           className='note-div'
-          {...header.notification_bar.$?.announcement_text}
         >
           {header.notification_bar.show_announcement && header.notification_bar.announcement_text &&
             parse(header.notification_bar.announcement_text)}
@@ -29,7 +28,6 @@ export default function Header({ header, navMenu }: {header: HeaderProps, navMen
           {header.logo ? (
             <Link to='/' title='Contentstack'>
               <img
-                {...header.logo.$?.url}
                 className='logo'
                 src={header.logo.url}
                 alt={header.logo.filename}
