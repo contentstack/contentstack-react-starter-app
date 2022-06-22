@@ -12,6 +12,7 @@ export default function Footer({ footer, navMenu }: {footer: FooterProps, navMen
           <Link to='/'>
             {footer.logo ? (
               <img
+                {...footer.logo.$?.url as {}}
                 src={footer.logo.url}
                 alt='contentstack logo'
                 title='contentstack'
@@ -51,6 +52,7 @@ export default function Footer({ footer, navMenu }: {footer: FooterProps, navMen
                   key={social.link.title}
                 >
                   <img
+                    {...social.icon.$?.url as {}}
                     src={social.icon.url}
                     alt='social icon'
                   />
@@ -65,7 +67,7 @@ export default function Footer({ footer, navMenu }: {footer: FooterProps, navMen
         </div>
       </div>
       {footer.copyright ? (
-        <div className='copyright'>
+        <div className='copyright' {...footer.$?.copyright as {}}>
           {parse(footer.copyright)}
         </div>
       ) : (
