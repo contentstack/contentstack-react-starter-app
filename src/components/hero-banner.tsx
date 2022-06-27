@@ -16,13 +16,13 @@ export default function HeroBanner(props: BannerProps) {
         className='home-content'
         style={{ color: banner.text_color ? banner.text_color : '#222' }}
       >
-        <h1 {...banner.$?.banner_title} className='hero-title'>
+        <h1 {...banner.$?.banner_title as {}} className='hero-title'>
           {banner.banner_title || <Skeleton />}
         </h1>
 
         {banner.banner_description ? (
           <p
-            {...banner.$?.banner_description}
+            {...banner.$?.banner_description as {}}
             className='hero-description'
             style={{ color: banner.text_color ? banner.text_color : '#737b7d' }}
           >
@@ -45,7 +45,7 @@ export default function HeroBanner(props: BannerProps) {
       </div>
       {banner.banner_image ? (
         <img
-          {...banner.banner_image.$?.url}
+          {...banner.banner_image.$?.url as {}}
           alt={banner.banner_image.filename}
           src={banner.banner_image.url}
         />
