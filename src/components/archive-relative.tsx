@@ -8,10 +8,10 @@ export default function ArchiveRelative({ blogs }: BlogListProps) {
     <>
       {blogs?.map((blog) => (
         <Link to={blog.url} key={blog.title}>
-          <div {...blog.$?.body}>
-            <h4 {...blog.$?.title}>{blog.title}</h4>
+          <div {...blog.$?.body as {}}>
+            <h4 {...blog.$?.title as {}}>{blog.title}</h4>
             {blog.body && (
-            <div {...blog.$?.body}>{parse(blog.body.slice(0, 80))}</div>
+            <div {...blog.$?.body as {}}>{parse(blog.body.slice(0, 80))}</div>
             )}
           </div>
         </Link>

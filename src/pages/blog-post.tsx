@@ -61,16 +61,16 @@ export default function BlogPost({ entry }: Prop) {
       <div className='blog-container'>
         <article className='blog-detail'>
           {post.title ? (
-            <h2 {...post.$?.title}>{post.title}</h2>
+            <h2 {...post.$?.title as {}}>{post.title}</h2>
           ) : (
             <h2>
               <Skeleton />
             </h2>
           )}
           {post.date ? (
-            <p {...post.$?.date}>
+            <p {...post.$?.date as {}}>
               {moment(post.date).format('ddd, MMM D YYYY')},{' '}
-              <strong {...post.author[0].$?.title}>
+              <strong {...post.author[0].$?.title as {}}>
                 {post.author[0].title}
               </strong>
             </p>
@@ -80,7 +80,7 @@ export default function BlogPost({ entry }: Prop) {
             </p>
           )}
           {post.body ? (
-            <div {...post.$?.body}>{parse(post.body)}</div>
+            <div {...post.$?.body as {}}>{parse(post.body)}</div>
           ) : (
             <Skeleton height={800} width={600} />
           )}
@@ -88,7 +88,7 @@ export default function BlogPost({ entry }: Prop) {
         <div className='blog-column-right'>
           <div className='related-post'>
             {Object.keys(banner).length && banner.page_components[2].widget ? (
-              <h2 {...banner?.page_components[2].widget.$?.title_h2}>
+              <h2 {...banner?.page_components[2].widget.$?.title_h2 as {}}>
                 {banner?.page_components[2].widget.title_h2}
               </h2>
             ) : (
