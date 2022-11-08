@@ -28,13 +28,9 @@ export default function Home({ entry }: Prop) {
   }
 
   useEffect(() => {
-    console.error('error...', error);
-    error && history('/404');
-  }, [error]);
-
-  useEffect(() => {
     fetchData();
-  }, [entryUrl, lpTs]);
+    error && history('/404');
+  }, [entryUrl, lpTs, error]);
 
   return Object.keys(getEntries).length ? (
     <RenderComponents
