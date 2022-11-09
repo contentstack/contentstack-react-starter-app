@@ -1,18 +1,24 @@
 /* eslint-disable no-undef */
-import * as contentstack from 'contentstack';
-import * as Utils from '@contentstack/utils';
+import * as contentstack from "contentstack";
+import * as Utils from "@contentstack/utils";
 
-import ContentstackLivePreview from '@contentstack/live-preview-utils';
+import ContentstackLivePreview from "@contentstack/live-preview-utils";
 
 const Stack = contentstack.Stack({
   api_key: process.env.REACT_APP_CONTENTSTACK_API_KEY,
   delivery_token: process.env.REACT_APP_CONTENTSTACK_DELIVERY_TOKEN,
   environment: process.env.REACT_APP_CONTENTSTACK_ENVIRONMENT,
-  region: process.env.REACT_APP_CONTENTSTACK_REGION ? process.env.REACT_APP_CONTENTSTACK_REGION : 'us',
+  region: process.env.REACT_APP_CONTENTSTACK_REGION
+    ? process.env.REACT_APP_CONTENTSTACK_REGION
+    : "us",
   live_preview: {
-    management_token: process.env.REACT_APP_CONTENTSTACK_MANAGEMENT_TOKEN ? process.env.REACT_APP_CONTENTSTACK_MANAGEMENT_TOKEN : '',
+    management_token: process.env.REACT_APP_CONTENTSTACK_MANAGEMENT_TOKEN
+      ? process.env.REACT_APP_CONTENTSTACK_MANAGEMENT_TOKEN
+      : "",
     enable: true,
-    host: process.env.REACT_APP_CONTENTSTACK_API_HOST ? process.env.REACT_APP_CONTENTSTACK_API_HOST : '',
+    host: process.env.REACT_APP_CONTENTSTACK_API_HOST
+      ? process.env.REACT_APP_CONTENTSTACK_API_HOST
+      : "",
   },
 });
 
@@ -23,7 +29,9 @@ ContentstackLivePreview.init({
   enable: true,
   stackSdk: Stack,
   clientUrlParams: {
-    host: process.env.REACT_APP_CONTENTSTACK_APP_HOST ? process.env.REACT_APP_CONTENTSTACK_APP_HOST : '',
+    host: process.env.REACT_APP_CONTENTSTACK_APP_HOST
+      ? process.env.REACT_APP_CONTENTSTACK_APP_HOST
+      : "",
   },
   ssr: false,
 });
@@ -33,7 +41,7 @@ if (process.env.REACT_APP_CONTENTSTACK_API_HOST) {
 }
 
 const renderOption = {
-  ['span']: (node, next) => {
+  ["span"]: (node, next) => {
     return next(node.children);
   },
 };
@@ -88,7 +96,7 @@ export default {
       const blogQuery = Stack.ContentType(contentTypeUid).Query();
       if (referenceFieldPath) blogQuery.includeReference(referenceFieldPath);
       blogQuery.includeOwner().toJSON();
-      const data = blogQuery.where('url', `${entryUrl}`).find();
+      const data = blogQuery.where("url", `${entryUrl}`).find();
       data.then(
         (result) => {
           jsonRtePath &&

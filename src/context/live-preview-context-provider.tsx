@@ -1,6 +1,6 @@
-import React, { createContext, useEffect, useState } from 'react';
-import ContentstackLivePreview from '@contentstack/live-preview-utils';
-import { Props } from './types';
+import React, { createContext, useEffect, useState } from "react";
+import ContentstackLivePreview from "@contentstack/live-preview-utils";
+import { Props } from "./types";
 
 const LivePreviewContext = createContext<number | null>(null);
 

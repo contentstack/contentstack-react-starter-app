@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import ArchiveRelative from '../components/archive-relative';
-import RenderComponents from '../components/render-components';
-import BlogList from '../components/blog-list';
-import { getBlogListRes, getPageRes } from '../helper/index.d';
-import Skeleton from 'react-loading-skeleton';
-import { Prop, Entry, ArchiveBlogList, BlogData } from '../typescript/pages';
-import { useLivePreviewCtx } from '../context/live-preview-context-provider';
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import ArchiveRelative from "../components/archive-relative";
+import RenderComponents from "../components/render-components";
+import BlogList from "../components/blog-list";
+import { getBlogListRes, getPageRes } from "../helper/index.d";
+import Skeleton from "react-loading-skeleton";
+import { Prop, Entry, ArchiveBlogList, BlogData } from "../typescript/pages";
+import { useLivePreviewCtx } from "../context/live-preview-context-provider";
 
 export default function Blog({ entry }: Prop) {
   const history = useNavigate();
@@ -20,7 +20,7 @@ export default function Blog({ entry }: Prop) {
 
   async function fetchData() {
     try {
-      const blog = await getPageRes('/blog');
+      const blog = await getPageRes("/blog");
       const result = await getBlogListRes();
       (!blog || !result) && setError(true);
 
@@ -46,7 +46,7 @@ export default function Blog({ entry }: Prop) {
 
   useEffect(() => {
     fetchData();
-    error && history('/404');
+    error && history("/404");
   }, [error, lpTs]);
 
   return (

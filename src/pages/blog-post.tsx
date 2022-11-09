@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import moment from 'moment';
-import parse from 'html-react-parser';
+import React, { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import moment from "moment";
+import parse from "html-react-parser";
 
-import ArchiveRelative from '../components/archive-relative';
-import RenderComponents from '../components/render-components';
-import { getPageRes, getBlogPostRes } from '../helper/index.d';
-import Skeleton from 'react-loading-skeleton';
-import { Prop, Banner, Post } from '../typescript/pages';
-import { useLivePreviewCtx } from '../context/live-preview-context-provider';
+import ArchiveRelative from "../components/archive-relative";
+import RenderComponents from "../components/render-components";
+import { getPageRes, getBlogPostRes } from "../helper/index.d";
+import Skeleton from "react-loading-skeleton";
+import { Prop, Banner, Post } from "../typescript/pages";
+import { useLivePreviewCtx } from "../context/live-preview-context-provider";
 
 export default function BlogPost({ entry }: Prop) {
   const lpTs = useLivePreviewCtx();
@@ -22,8 +22,8 @@ export default function BlogPost({ entry }: Prop) {
 
   async function fetchData() {
     try {
-      const entryUrl = blogId ? `/blog/${blogId}` : '/';
-      const banner = await getPageRes('/blog');
+      const entryUrl = blogId ? `/blog/${blogId}` : "/";
+      const banner = await getPageRes("/blog");
       const post = await getBlogPostRes(entryUrl);
       (!banner || !post) && setError(true);
       setEntry({ banner, post });
@@ -36,7 +36,7 @@ export default function BlogPost({ entry }: Prop) {
 
   useEffect(() => {
     fetchData();
-    error && history('/404');
+    error && history("/404");
   }, [blogId, lpTs, error]);
 
   const { post, banner } = getEntry;
@@ -65,7 +65,7 @@ export default function BlogPost({ entry }: Prop) {
           )}
           {post.date ? (
             <p {...(post.$?.date as {})}>
-              {moment(post.date).format('ddd, MMM D YYYY')},{' '}
+              {moment(post.date).format("ddd, MMM D YYYY")},{" "}
               <strong {...(post.author[0].$?.title as {})}>
                 {post.author[0].title}
               </strong>
