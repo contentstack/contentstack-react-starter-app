@@ -5,10 +5,10 @@ import RenderComponents from '../components/render-components';
 import { getPageRes } from '../helper/index.d';
 import Skeleton from 'react-loading-skeleton';
 import { PageEntry, Prop } from '../typescript/pages';
-import { LivePreviewContext } from '../context/live-preview-context-provider';
+import { useLivePreviewCtx } from '../context/live-preview-context-provider';
 
 export default function Home({ entry }: Prop) {
-  const lpTs = useContext(LivePreviewContext);
+  const lpTs = useLivePreviewCtx();
   const params = useParams();
   const entryUrl = params.page ? `/${params.page}` : '/';
   const history = useNavigate();

@@ -1,13 +1,10 @@
-import React, { FC, createContext, useEffect, useState } from 'react';
+import React, { createContext, useEffect, useState } from 'react';
 import ContentstackLivePreview from '@contentstack/live-preview-utils';
+import { Props } from './types';
 
-const LivePreviewContext = createContext(Date.now());
+const LivePreviewContext = createContext<number | null>(null);
 
-type Props = {
-  children: React.ReactNode;
-};
-
-const LivePreviewProvider: FC<Props> = ({ children }) => {
+const LivePreviewProvider = (props: Props) => {
   const [lpTs, setLpTs] = useState(Date.now());
 
   useEffect(() => {
@@ -20,9 +17,11 @@ const LivePreviewProvider: FC<Props> = ({ children }) => {
 
   return (
     <LivePreviewContext.Provider value={lpTs}>
-      {children}
+      {props.children}
     </LivePreviewContext.Provider>
   );
 };
 
-export { LivePreviewProvider, LivePreviewContext };
+const useLivePreviewCtx = () => React.useContext(LivePreviewContext);
+
+export { LivePreviewProvider, useLivePreviewCtx };

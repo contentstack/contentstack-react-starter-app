@@ -6,7 +6,7 @@ import BlogList from '../components/blog-list';
 import { getBlogListRes, getPageRes } from '../helper/index.d';
 import Skeleton from 'react-loading-skeleton';
 import { Prop, Entry, ArchiveBlogList, BlogData } from '../typescript/pages';
-import { LivePreviewContext } from '../context/live-preview-context-provider';
+import { useLivePreviewCtx } from '../context/live-preview-context-provider';
 
 export default function Blog({ entry }: Prop) {
   const history = useNavigate();
@@ -16,7 +16,7 @@ export default function Blog({ entry }: Prop) {
     list: [],
   });
   const [error, setError] = useState(false);
-  const lpTs = useContext(LivePreviewContext);
+  const lpTs = useLivePreviewCtx();
 
   async function fetchData() {
     try {

@@ -8,10 +8,10 @@ import RenderComponents from '../components/render-components';
 import { getPageRes, getBlogPostRes } from '../helper/index.d';
 import Skeleton from 'react-loading-skeleton';
 import { Prop, Banner, Post } from '../typescript/pages';
-import { LivePreviewContext } from '../context/live-preview-context-provider';
+import { useLivePreviewCtx } from '../context/live-preview-context-provider';
 
 export default function BlogPost({ entry }: Prop) {
-  const lpTs = useContext(LivePreviewContext);
+  const lpTs = useLivePreviewCtx();
   const { blogId } = useParams();
   const history = useNavigate();
   const [getEntry, setEntry] = useState({
