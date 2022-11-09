@@ -1,25 +1,29 @@
-import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import moment from 'moment';
-import parse from 'html-react-parser';
+import React, { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import moment from "moment";
+import parse from "html-react-parser";
 
-import ArchiveRelative from '../components/archive-relative';
-import RenderComponents from '../components/render-components';
-import { onEntryChange } from '../sdk/entry.d';
-import { getPageRes, getBlogPostRes } from '../helper/index.d';
-import Skeleton from 'react-loading-skeleton';
+import ArchiveRelative from "../components/archive-relative";
+import RenderComponents from "../components/render-components";
+import { getPageRes, getBlogPostRes } from "../helper/index.d";
+import Skeleton from "react-loading-skeleton";
 import { Prop, Banner, Post } from "../typescript/pages";
+import { useLivePreviewCtx } from "../context/live-preview-context-provider";
 
 export default function BlogPost({ entry }: Prop) {
+  const lpTs = useLivePreviewCtx();
   const { blogId } = useParams();
   const history = useNavigate();
-  const [getEntry, setEntry] = useState({ banner: {} as Banner, post: {} as Post});
+  const [getEntry, setEntry] = useState({
+    banner: {} as Banner,
+    post: {} as Post,
+  });
   const [error, setError] = useState(false);
 
   async function fetchData() {
     try {
-      const entryUrl = blogId ? `/blog/${blogId}` : '/';
-      const banner = await getPageRes('/blog');
+      const entryUrl = blogId ? `/blog/${blogId}` : "/";
+      const banner = await getPageRes("/blog");
       const post = await getBlogPostRes(entryUrl);
       (!banner || !post) && setError(true);
       setEntry({ banner, post });
@@ -31,17 +35,9 @@ export default function BlogPost({ entry }: Prop) {
   }
 
   useEffect(() => {
-    onEntryChange(fetchData);
-  }, []);
-  useEffect(() => {
-    error && history('/404');
-  }, [error]);
-
-  useEffect(() => {
-    if (getEntry.post.url !== `/blog/${blogId}`) {
-      fetchData();
-    }
-  }, [getEntry.post, blogId]);
+    fetchData();
+    error && history("/404");
+  }, [blogId, lpTs, error]);
 
   const { post, banner } = getEntry;
   return (
@@ -61,26 +57,26 @@ export default function BlogPost({ entry }: Prop) {
       <div className='blog-container'>
         <article className='blog-detail'>
           {post.title ? (
-            <h2 {...post.$?.title as {}}>{post.title}</h2>
+            <h2 {...(post.$?.title as {})}>{post.title}</h2>
           ) : (
             <h2>
               <Skeleton />
             </h2>
           )}
           {post.date ? (
-            <p {...post.$?.date as {}}>
-              {moment(post.date).format('ddd, MMM D YYYY')},{' '}
-              <strong {...post.author[0].$?.title as {}}>
+            <p {...(post.$?.date as {})}>
+              {moment(post.date).format("ddd, MMM D YYYY")},{" "}
+              <strong {...(post.author[0].$?.title as {})}>
                 {post.author[0].title}
               </strong>
             </p>
           ) : (
             <p>
-              <Skeleton width={300}/>
+              <Skeleton width={300} />
             </p>
           )}
           {post.body ? (
-            <div {...post.$?.body as {}}>{parse(post.body)}</div>
+            <div {...(post.$?.body as {})}>{parse(post.body)}</div>
           ) : (
             <Skeleton height={800} width={600} />
           )}
@@ -88,7 +84,7 @@ export default function BlogPost({ entry }: Prop) {
         <div className='blog-column-right'>
           <div className='related-post'>
             {Object.keys(banner).length && banner.page_components[2].widget ? (
-              <h2 {...banner?.page_components[2].widget.$?.title_h2 as {}}>
+              <h2 {...(banner?.page_components[2].widget.$?.title_h2 as {})}>
                 {banner?.page_components[2].widget.title_h2}
               </h2>
             ) : (
