@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
 import RenderComponents from "../components/render-components";
-import { getPageRes } from "../helper/index.d";
+import { getPageRes } from "../helper";
 import Skeleton from "react-loading-skeleton";
 import { PageEntry, Prop } from "../typescript/pages";
 import { useLivePreviewCtx } from "../context/live-preview-context-provider";

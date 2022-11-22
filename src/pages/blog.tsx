@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import ArchiveRelative from "../components/archive-relative";
 import RenderComponents from "../components/render-components";
 import BlogList from "../components/blog-list";
-import { getBlogListRes, getPageRes } from "../helper/index.d";
+import { getBlogListRes, getPageRes } from "../helper";
 import Skeleton from "react-loading-skeleton";
 import { Prop, Entry, ArchiveBlogList, BlogData } from "../typescript/pages";
 import { useLivePreviewCtx } from "../context/live-preview-context-provider";
