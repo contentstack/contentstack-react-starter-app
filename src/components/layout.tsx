@@ -1,14 +1,22 @@
-import React, { useEffect, useState } from 'react';
-import { Outlet, useNavigate } from 'react-router-dom';
-import Header from './header';
-import Footer from './footer';
-import DevTools from './devtools';
-import { getHeaderRes, getFooterRes, getAllEntries } from '../helper/index.d';
-import { onEntryChange } from '../sdk/entry.d';
-import { EntryProps, Entry, NavLink, Links, HeaderProps, FooterProps, NavmenuProps, HeadermenuProps} from "../typescript/layout";
+import React, { useEffect, useState } from "react";
+import { Outlet, useNavigate } from "react-router-dom";
+import Header from "./header";
+import Footer from "./footer";
+import DevTools from "./devtools";
+import { getHeaderRes, getFooterRes, getAllEntries } from "../helper";
+import { onEntryChange } from "../sdk/entry";
+import {
+  EntryProps,
+  Entry,
+  NavLink,
+  Links,
+  HeaderProps,
+  FooterProps,
+  NavmenuProps,
+  HeadermenuProps,
+} from "../typescript/layout";
 
-export default function Layout({ entry }: {entry: EntryProps}) {
-
+export default function Layout({ entry }: { entry: EntryProps }) {
   const history = useNavigate();
   const [getLayout, setLayout] = useState({
     header: {} as HeaderProps,
@@ -70,8 +78,8 @@ export default function Layout({ entry }: {entry: EntryProps}) {
   }, []);
 
   useEffect(() => {
-    console.error('error...', error);
-    error && history('/error');
+    console.error("error...", error);
+    error && history("/error");
   }, [error]);
 
   return (

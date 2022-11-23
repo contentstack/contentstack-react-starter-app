@@ -5,7 +5,7 @@ import parse from "html-react-parser";
 
 import ArchiveRelative from "../components/archive-relative";
 import RenderComponents from "../components/render-components";
-import { getPageRes, getBlogPostRes } from "../helper/index.d";
+import { getPageRes, getBlogPostRes } from "../helper";
 import Skeleton from "react-loading-skeleton";
 import { Prop, Banner, Post } from "../typescript/pages";
 import { useLivePreviewCtx } from "../context/live-preview-context-provider";
