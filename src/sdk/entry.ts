@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-/* eslint-disable no-undef */
 import * as contentstack from "contentstack";
 import * as Utils from "@contentstack/utils";
 
