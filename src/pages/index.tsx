@@ -1,17 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { onEntryChange } from '../sdk/entry.d';
+import React, { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 
-import RenderComponents from '../components/render-components';
-import { getPageRes } from '../helper/index.d';
-import Skeleton from 'react-loading-skeleton';
+import RenderComponents from "../components/render-components";
+import { getPageRes } from "../helper";
+import Skeleton from "react-loading-skeleton";
 import { PageEntry, Prop } from "../typescript/pages";
-
+import { useLivePreviewCtx } from "../context/live-preview-context-provider";
 
 export default function Home({ entry }: Prop) {
-
+  const lpTs = useLivePreviewCtx();
   const params = useParams();
-  const entryUrl = params.page ? `/${params.page}` : '/';
+  const entryUrl = params.page ? `/${params.page}` : "/";
   const history = useNavigate();
   const [getEntries, setEntries] = useState({} as PageEntry);
   const [error, setError] = useState(false);
@@ -29,19 +28,9 @@ export default function Home({ entry }: Prop) {
   }
 
   useEffect(() => {
-    onEntryChange(fetchData);
-  }, []);
-
-  useEffect(() => {
-    console.error('error...', error);
-    error && history('/404');
-  }, [error]);
-
-  useEffect(() => {
-    if (getEntries.url !== entryUrl) {
-      fetchData();
-    }
-  }, [getEntries, entryUrl]);
+    fetchData();
+    error && history("/404");
+  }, [entryUrl, lpTs, error]);
 
   return Object.keys(getEntries).length ? (
     <RenderComponents
