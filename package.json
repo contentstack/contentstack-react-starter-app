@@ -56,5 +56,8 @@
     "eslint": "^8.27.0",
     "eslint-plugin-react": "^7.31.10",
     "react-scripts": "^5.0.1"
+  },
+  "engines": {
+    "node": "=16.16.0"
   }
 }
