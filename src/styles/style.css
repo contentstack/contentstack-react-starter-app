@@ -1368,10 +1368,18 @@ footer a {
 
 /* json preview css*/
 
-.object-key {
-  color: #c8501e;
+.data-key {
+  color: #C8501E !important;
 }
 
-.string-value {
-  color: #5d9ccb;
+.data-key svg{
+  color: #002b36;  
+}
+
+.MuiBox-root {
+  color: #002b36;
+}
+
+.string-value  span{
+  color: #5d9ccb !important;
 }
