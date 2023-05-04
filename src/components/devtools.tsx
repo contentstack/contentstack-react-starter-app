@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import ReactJson from "react-json-view";
+import { JsonViewer } from "@textea/json-viewer";
 import Tooltip from "../components/too-tip";
 
 function filterObject(inputObject: any) {
@@ -79,11 +79,13 @@ const DevTools = ({ response }: any) => {
           <div className="modal-body">
             <pre id="jsonViewer">
               {filteredJson && (
-                <ReactJson
-                  src={filteredJson}
-                  collapsed={1}
-                  name="response"
+                <JsonViewer
+                  value={filteredJson}
+                  defaultInspectDepth={1}
+                  rootName="response"
+                  displayDataTypes={false}
                   enableClipboard={false}
+                  style={{ color: "#C8501E" }}
                 />
               )}
             </pre>
