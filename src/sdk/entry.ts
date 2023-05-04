@@ -22,6 +22,9 @@ const Stack = contentstack.Stack({
   api_key: `${process.env.REACT_APP_CONTENTSTACK_API_KEY}`,
   delivery_token: `${process.env.REACT_APP_CONTENTSTACK_DELIVERY_TOKEN}`,
   environment: `${process.env.REACT_APP_CONTENTSTACK_ENVIRONMENT}`,
+  branch: `${process.env.REACT_APP_CONTENTSTACK_BRANCH}`
+    ? `${process.env.REACT_APP_CONTENTSTACK_BRANCH}`
+    : "main",
   //@ts-ignore
   region: `${process.env.REACT_APP_CONTENTSTACK_REGION}`
     ? `${process.env.REACT_APP_CONTENTSTACK_REGION}`
