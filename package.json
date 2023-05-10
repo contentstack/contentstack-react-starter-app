@@ -12,6 +12,7 @@
     "contentstack": "^3.17.1",
     "html-react-parser": "^3.0.16",
     "moment": "^2.29.4",
+    "nth-check": "^2.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-loading-skeleton": "^3.3.0",
