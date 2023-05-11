@@ -1,5 +1,5 @@
-@import './json-preview.css';
-@import './tool-tip.css';
+@import "./json-preview.css";
+@import "./tool-tip.css";
 
 body {
   font-family: Inter, sans-serif;
@@ -805,7 +805,7 @@ footer a {
   .header .menu-icon .navicon:before,
   .header .menu-icon .navicon:after {
     background: #333;
-    content: '';
+    content: "";
     display: block;
     height: 100%;
     position: absolute;
