@@ -4,6 +4,7 @@ import * as contentstack from "contentstack";
 import * as Utils from "@contentstack/utils";
 
 import ContentstackLivePreview from "@contentstack/live-preview-utils";
+import { customHostUrl, isValidCustomHostUrl } from "./utils";
 
 type GetEntry = {
   contentTypeUid: string;
@@ -17,6 +18,9 @@ type GetEntryByUrl = {
   referenceFieldPath: string[] | undefined;
   jsonRtePath: string[] | undefined;
 };
+
+let customHostBaseUrl = process.env.REACT_APP_CONTENTSTACK_API_HOST as string
+ customHostBaseUrl = customHostUrl(customHostBaseUrl)
 
 const Stack = contentstack.Stack({
   api_key: `${process.env.REACT_APP_CONTENTSTACK_API_KEY}`,
@@ -55,8 +59,8 @@ ContentstackLivePreview.init({
   ssr: false,
 });
 
-if (`${process.env.REACT_APP_CONTENTSTACK_API_HOST}`) {
-  Stack.setHost(`${process.env.REACT_APP_CONTENTSTACK_API_HOST}`);
+if (isValidCustomHostUrl(customHostBaseUrl)) {
+  Stack.setHost(customHostBaseUrl);
 }
 
 const renderOption = {
