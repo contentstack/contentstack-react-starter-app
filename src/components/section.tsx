@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { SectionProps } from "../typescript/section";
+import { Section as SectionProp } from "../typescript/components";
 
-export default function Section({ section }: {section : SectionProps}) {
+export default function Section({ section }: {section : SectionProp}) {
 
   function contentSection() {
     return (
@@ -10,7 +10,7 @@ export default function Section({ section }: {section : SectionProps}) {
         {section.title_h2 && <h2 {...section.$?.title_h2 as {}}>{section.title_h2}</h2>}
         {section.description && <p {...section.$?.description as {}}>{section.description}</p>}
         {section.call_to_action.title && section.call_to_action.href ? (
-          <Link {...section.call_to_action.$?.title} to={section.call_to_action.href} className='btn secondary-btn'>
+          <Link {...section.call_to_action.$?.title as {}} to={section.call_to_action.href} className='btn secondary-btn'>
             {section.call_to_action.title}
           </Link>
         ) : (

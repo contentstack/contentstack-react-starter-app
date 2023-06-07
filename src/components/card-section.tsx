@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { CardProps } from "../typescript/card";
+import { SectionWithCards } from "../typescript/components";
 
-export default function CardSection({ cards }: CardProps) {
+export default function CardSection({ cards }: SectionWithCards) {
 
   return (
     <div className='demo-section'>
@@ -12,7 +12,7 @@ export default function CardSection({ cards }: CardProps) {
           {card.description && <p {...card.$?.description as {}}>{card.description}</p>}
           <div className='card-cta'>
             {card.call_to_action.title && card.call_to_action.href && (
-              <Link to={card.call_to_action.href} className='btn primary-btn' {...card.call_to_action.$?.title}>
+              <Link to={card.call_to_action.href} className='btn primary-btn' {...card.call_to_action.$?.title as {}}>
                 {card.call_to_action.title}
               </Link>
             )}

@@ -7,16 +7,17 @@ import ArchiveRelative from "../components/archive-relative";
 import RenderComponents from "../components/render-components";
 import { getPageRes, getBlogPostRes } from "../helper";
 import Skeleton from "react-loading-skeleton";
-import { Prop, Banner, Post } from "../typescript/pages";
 import { useLivePreviewCtx } from "../context/live-preview-context-provider";
+import { BlogPostRes, Page } from "../typescript/pages";
+import { EntryProps } from "../typescript/components";
 
-export default function BlogPost({ entry }: Prop) {
+export default function BlogPost({entry}:{entry:({page, blogPost}:EntryProps)=> void}) {
   const lpTs = useLivePreviewCtx();
   const { blogId } = useParams();
   const history = useNavigate();
   const [getEntry, setEntry] = useState({
-    banner: {} as Banner,
-    post: {} as Post,
+    banner: {} as Page,
+    post: {} as BlogPostRes,
   });
   const [error, setError] = useState(false);
 
@@ -27,7 +28,7 @@ export default function BlogPost({ entry }: Prop) {
       const post = await getBlogPostRes(entryUrl);
       (!banner || !post) && setError(true);
       setEntry({ banner, post });
-      entry({ page: banner, blogPost: post });
+      entry({ page: [banner], blogPost: [post] });
     } catch (error) {
       console.error(error);
       setError(true);

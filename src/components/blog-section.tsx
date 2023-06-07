@@ -1,17 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import parse from 'html-react-parser';
-import { FeaturedBlogProps } from "../typescript/blog";
+import { FromBlog } from "../typescript/components";
 
-export default function BlogSection(props: FeaturedBlogProps) {
-
-  const fromBlog = props.blogs;
+export default function BlogSection({blogs:fromBlog}: {blogs:FromBlog}) {
   return (
     <div className='community-section'>
       <div className='community-head'>
         {fromBlog.title_h2 && <h2 {...fromBlog.$?.title_h2 as {}}>{fromBlog.title_h2}</h2>}
         {fromBlog.view_articles && (
-          <Link to={fromBlog.view_articles.href} className='btn secondary-btn article-btn' {...fromBlog.view_articles.$?.title}>
+          <Link to={fromBlog.view_articles.href} className='btn secondary-btn article-btn' {...fromBlog.view_articles.$?.title as {}}>
             {fromBlog.view_articles.title}
           </Link>
         )}
@@ -21,7 +19,7 @@ export default function BlogSection(props: FeaturedBlogProps) {
           <div className='featured-blog' key={blog.title}>
             {blog.featured_image && <img src={blog.featured_image.url} alt={blog.featured_image.filename} className='blog-post-img' {...blog.featured_image.$?.url as {}} />}
             <div className='featured-content'>
-              {blog.title && <h3 {...blog.$?.title}>{blog.title}</h3>}
+              {blog.title && <h3 {...blog.$?.title as {}}>{blog.title}</h3>}
 
               <div {...blog.$?.body as {}}>{blog.body && parse(blog.body.slice(0, 300))}</div>
               {blog.url && (
