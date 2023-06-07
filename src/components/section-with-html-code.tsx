@@ -1,8 +1,8 @@
 import React from 'react';
 import parse from 'html-react-parser';
-import { ObjectProps } from "../typescript/section";
+import { SectionWithHtmlCode as SectionWithHtmlProp } from "../typescript/components";
 
-export default function SectionWithHtmlCode({ embedObject }: {embedObject : ObjectProps}) {
+export default function SectionWithHtmlCode({ embedObject }: {embedObject : SectionWithHtmlProp}) {
 
   if (embedObject.html_code_alignment === 'Left') {
     return (

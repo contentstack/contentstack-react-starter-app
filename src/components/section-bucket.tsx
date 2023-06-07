@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import parse from 'html-react-parser';
-import { BucketProps } from "../typescript/section";
+import { SectionWithBuckets } from "../typescript/components";
 
-export default function SectionBucket({ section }: {section: BucketProps}) {
+export default function SectionBucket({ section }: {section: SectionWithBuckets}) {
 
   return (
     <div className='member-main-section'>
@@ -19,7 +19,7 @@ export default function SectionBucket({ section }: {section: BucketProps}) {
             {bucket.title_h3 ? <h3 {...bucket.$?.title_h3 as {}}>{bucket.title_h3}</h3> : ''}
             <div {...bucket.$?.description as {}}> {bucket.description && parse(bucket.description)}</div>
             {bucket.call_to_action.title ? (
-              <Link to={bucket.call_to_action.href ? bucket.call_to_action.href : '#'} {...bucket.call_to_action.$?.title}>
+              <Link to={bucket.call_to_action.href ? bucket.call_to_action.href : '#'} {...bucket.call_to_action.$?.title as {}}>
                 {`${bucket.call_to_action.title} -->`}
               </Link>
             ) : (

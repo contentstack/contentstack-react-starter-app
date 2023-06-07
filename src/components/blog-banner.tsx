@@ -1,7 +1,7 @@
 import React from 'react';
-import {BannerProps} from '../typescript/blog';
+import { HeroBanner } from "../typescript/components";
 
-export default function BlogBanner({ blog_banner }: {blog_banner : BannerProps}) {
+export default function BlogBanner({ blog_banner }: {blog_banner : HeroBanner}) {
 
   return (
     <div className='blog-page-banner' style={{ background: `${blog_banner?.bg_color}` }}>

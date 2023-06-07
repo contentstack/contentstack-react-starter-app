@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import parse from 'html-react-parser';
-import {BlogListProps} from '../typescript/archive-relative';
+import { BlogPostRes } from "../typescript/pages";
 
-export default function ArchiveRelative({ blogs }: BlogListProps) {  
+export default function ArchiveRelative({ blogs }: {blogs:BlogPostRes[]}) {  
   return (
     <>
       {blogs?.map((blog) => (
