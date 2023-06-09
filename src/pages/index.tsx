@@ -4,15 +4,16 @@ import { useParams, useNavigate } from "react-router-dom";
 import RenderComponents from "../components/render-components";
 import { getPageRes } from "../helper";
 import Skeleton from "react-loading-skeleton";
-import { PageEntry, Prop } from "../typescript/pages";
 import { useLivePreviewCtx } from "../context/live-preview-context-provider";
+import { EntryProps } from "../typescript/components";
+import { Page } from "../typescript/pages";
 
-export default function Home({ entry }: Prop) {
+export default function Home({ entry }:{entry:({page, blogPost}:EntryProps)=> void}) {
   const lpTs = useLivePreviewCtx();
   const params = useParams();
   const entryUrl = params.page ? `/${params.page}` : "/";
   const history = useNavigate();
-  const [getEntries, setEntries] = useState({} as PageEntry);
+  const [getEntries, setEntries] = useState({} as Page);
   const [error, setError] = useState(false);
 
   async function fetchData() {
@@ -20,7 +21,7 @@ export default function Home({ entry }: Prop) {
       const result = await getPageRes(entryUrl);
       !result && setError(true);
       setEntries({ ...result });
-      entry({ page: result });
+      entry({ page: [result] });
     } catch (error) {
       setError(true);
       console.error(error);

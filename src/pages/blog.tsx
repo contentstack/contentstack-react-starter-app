@@ -5,15 +5,16 @@ import RenderComponents from "../components/render-components";
 import BlogList from "../components/blog-list";
 import { getBlogListRes, getPageRes } from "../helper";
 import Skeleton from "react-loading-skeleton";
-import { Prop, Entry, ArchiveBlogList, BlogData } from "../typescript/pages";
 import { useLivePreviewCtx } from "../context/live-preview-context-provider";
+import { BlogPostRes, Page } from "../typescript/pages";
+import { EntryProps } from "../typescript/components";
 
-export default function Blog({ entry }: Prop) {
+export default function Blog({ entry }:{entry:({page, blogPost}:EntryProps)=> void}) {
   const history = useNavigate();
-  const [getEntry, setEntry] = useState({} as Entry);
+  const [getEntry, setEntry] = useState({} as Page);
   const [getList, setList] = useState({
-    archive: {} as ArchiveBlogList,
-    list: [],
+    archive: [] as BlogPostRes[],
+    list: [] as BlogPostRes[],
   });
   const [error, setError] = useState(false);
   const lpTs = useLivePreviewCtx();
@@ -21,23 +22,11 @@ export default function Blog({ entry }: Prop) {
   async function fetchData() {
     try {
       const blog = await getPageRes("/blog");
-      const result = await getBlogListRes();
-      (!blog || !result) && setError(true);
-
-      const archive = [] as any;
-      const blogLists = [] as any;
-
-      result.forEach((blogs: BlogData) => {
-        if (blogs.is_archived) {
-          archive.push(blogs);
-        } else {
-          blogLists.push(blogs);
-        }
-      });
-
+      const {archivedBlogs,recentBlogs} = await getBlogListRes();
       setEntry(blog);
-      setList({ archive: archive, list: blogLists });
-      entry({ page: blog, blogPost: result });
+      setList({ archive: archivedBlogs, list: recentBlogs });
+      const blogList = recentBlogs.concat(archivedBlogs)
+      entry({ page: [blog], blogPost: blogList });
     } catch (error) {
       console.error(error);
       setError(true);
@@ -83,7 +72,7 @@ export default function Blog({ entry }: Prop) {
               <Skeleton />
             </h2>
           )}
-          {Object.keys(getList.archive).length ? (
+          {getList.archive.length ? (
             <ArchiveRelative blogs={getList.archive} />
           ) : (
             <Skeleton height={600} width={300} />
