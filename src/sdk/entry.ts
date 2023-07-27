@@ -21,10 +21,10 @@ type GetEntryByUrl = {
 
 const {
   REACT_APP_CONTENTSTACK_API_HOST,
-  CONTENTSTACK_APP_HOST,
-  CONTENTSTACK_API_KEY,
-  CONTENTSTACK_ENVIRONMENT,
-  CONTENTSTACK_LIVE_PREVIEW,
+  REACT_APP_CONTENTSTACK_APP_HOST,
+  REACT_APP_CONTENTSTACK_API_KEY,
+  REACT_APP_CONTENTSTACK_ENVIRONMENT,
+  REACT_APP_CONTENTSTACK_LIVE_PREVIEW,
 } = process.env;
 const customHostBaseUrl = customHostUrl(
   REACT_APP_CONTENTSTACK_API_HOST as string
@@ -44,13 +44,13 @@ ContentstackLivePreview.init({
   //@ts-ignore
   stackSdk: Stack,
   clientUrlParams: {
-    host: CONTENTSTACK_APP_HOST,
+    host: REACT_APP_CONTENTSTACK_APP_HOST,
   },
   stackDetails: {
-    apiKey: CONTENTSTACK_API_KEY,
-    environment: CONTENTSTACK_ENVIRONMENT,
+    apiKey: REACT_APP_CONTENTSTACK_API_KEY,
+    environment: REACT_APP_CONTENTSTACK_ENVIRONMENT,
   },
-  enable: CONTENTSTACK_LIVE_PREVIEW === "true",
+  enable: REACT_APP_CONTENTSTACK_LIVE_PREVIEW === "true",
   ssr: false,
 })?.catch((err) => console.error(err));
 
