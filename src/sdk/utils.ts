@@ -5,10 +5,10 @@ const {
   REACT_APP_CONTENTSTACK_ENVIRONMENT,
   REACT_APP_CONTENTSTACK_BRANCH,
   REACT_APP_CONTENTSTACK_REGION,
-  REACT_APP_CONTENTSTACK_MANAGEMENT_TOKEN,
-  REACT_APP_CONTENTSTACK_API_HOST,
+  REACT_APP_CONTENTSTACK_PREVIEW_TOKEN,
   REACT_APP_CONTENTSTACK_APP_HOST,
   REACT_APP_CONTENTSTACK_LIVE_PREVIEW,
+  REACT_APP_CONTENTSTACK_PREVIEW_HOST
 } = process.env;
 
 // basic env validation
@@ -23,8 +23,8 @@ export const isBasicConfigValid = () => {
 export const isLpConfigValid = () => {
   return (
     !!REACT_APP_CONTENTSTACK_LIVE_PREVIEW &&
-    !!REACT_APP_CONTENTSTACK_MANAGEMENT_TOKEN &&
-    !!REACT_APP_CONTENTSTACK_API_HOST &&
+    !!REACT_APP_CONTENTSTACK_PREVIEW_TOKEN &&
+    !!REACT_APP_CONTENTSTACK_PREVIEW_HOST &&
     !!REACT_APP_CONTENTSTACK_APP_HOST
   );
 };
@@ -44,9 +44,9 @@ const setLivePreviewConfig = (): LivePreview => {
   if (!isLpConfigValid())
     throw new Error("Your LP config is set to true. Please make you have set all required LP config in .env");
   return {
-    management_token: REACT_APP_CONTENTSTACK_MANAGEMENT_TOKEN as string,
-    enable: REACT_APP_CONTENTSTACK_LIVE_PREVIEW === "true",
-    host: REACT_APP_CONTENTSTACK_API_HOST as string,
+    preview_token: REACT_APP_CONTENTSTACK_PREVIEW_TOKEN as string,
+    enable: REACT_APP_CONTENTSTACK_LIVE_PREVIEW as string === "true",
+    host: REACT_APP_CONTENTSTACK_PREVIEW_HOST as string,
   } as LivePreview;
 };
 // contentstack sdk initialization
@@ -66,7 +66,7 @@ export const initializeContentStackSdk = (): Stack => {
   return Stack(stackConfig);
 };
 // api host url
-export const customHostUrl = (baseUrl: string): string => {
+export const customHostUrl = (baseUrl=''): string => {
   return baseUrl.replace("api", "cdn");
 };
 // generate prod api urls
