@@ -23,15 +23,15 @@ const {
   REACT_APP_CONTENTSTACK_API_HOST,
 } = process.env;
 
-const customHostBaseUrl = customHostUrl(
+const customHostBaseUrl = REACT_APP_CONTENTSTACK_API_HOST? customHostUrl(
   REACT_APP_CONTENTSTACK_API_HOST as string
-);
+): "";
 
 // SDK initialization
 const Stack = initializeContentStackSdk();
 
 // set host url only for custom host or non prod base url's
-if (isValidCustomHostUrl(customHostBaseUrl)) {
+if (customHostBaseUrl && isValidCustomHostUrl(customHostBaseUrl)) {
   Stack.setHost(customHostBaseUrl);
 }
 
