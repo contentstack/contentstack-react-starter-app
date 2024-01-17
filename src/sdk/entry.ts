@@ -40,8 +40,6 @@ ContentstackLivePreview.init({
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //@ts-ignore
 stackSdk:Stack,
-
-// enable: REACT_APP_CONTENTSTACK_LIVE_PREVIEW === "true"
 })?.catch((error) => console.error(error));
 
 
