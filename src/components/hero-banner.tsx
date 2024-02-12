@@ -1,10 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Skeleton from 'react-loading-skeleton';
-import { BannerProps } from "../typescript/banner";
+import { HeroBanner as HeroBannerProp } from "../typescript/components";
 
-export default function HeroBanner(props: BannerProps) {
-  const banner = props.hero_banner;
+export default function HeroBanner({hero_banner:banner}: {hero_banner:HeroBannerProp}) {
   return (
     <div
       className='hero-banner'
@@ -16,13 +15,13 @@ export default function HeroBanner(props: BannerProps) {
         className='home-content'
         style={{ color: banner.text_color ? banner.text_color : '#222' }}
       >
-        <h1 {...banner.$?.banner_title} className='hero-title'>
+        <h1 {...banner.$?.banner_title as {}} className='hero-title'>
           {banner.banner_title || <Skeleton />}
         </h1>
 
         {banner.banner_description ? (
           <p
-            {...banner.$?.banner_description}
+            {...banner.$?.banner_description as {}}
             className='hero-description'
             style={{ color: banner.text_color ? banner.text_color : '#737b7d' }}
           >
@@ -31,9 +30,9 @@ export default function HeroBanner(props: BannerProps) {
         ) : (
           ''
         )}
-        {banner.call_to_action.title && banner.call_to_action.href ? (
+        {banner.call_to_action ? (
           <Link
-            {...banner.call_to_action.$?.title}
+            {...banner.call_to_action.$?.title as {}}
             to={banner.call_to_action.href}
             className='btn tertiary-btn'
           >
@@ -45,7 +44,7 @@ export default function HeroBanner(props: BannerProps) {
       </div>
       {banner.banner_image ? (
         <img
-          {...banner.banner_image.$?.url}
+          {...banner.banner_image.$?.url as {}}
           alt={banner.banner_image.filename}
           src={banner.banner_image.url}
         />

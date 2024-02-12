@@ -1,20 +1,21 @@
-import React, { useEffect, useState } from 'react';
-import { Outlet, useNavigate } from 'react-router-dom';
-import Header from './header';
-import Footer from './footer';
-import DevTools from './devtools';
-import { getHeaderRes, getFooterRes, getAllEntries } from '../helper/index.d';
-import { onEntryChange } from '../sdk/entry.d';
-import { EntryProps, Entry, NavLink, Links, HeaderProps, FooterProps, NavmenuProps, HeadermenuProps} from "../typescript/layout";
+import React, { useEffect, useState } from "react";
+import { Outlet, useNavigate } from "react-router-dom";
+import Header from "./header";
+import Footer from "./footer";
+import DevTools from "./devtools";
+import { getHeaderRes, getFooterRes, getAllEntries } from "../helper";
+import { onEntryChange } from "../sdk/entry";
+import { EntryProps } from "../typescript/components";
+import { FooterRes, HeaderRes, NavigationMenu } from "../typescript/response";
+import { Link } from "../typescript/pages";
 
-export default function Layout({ entry }: {entry: EntryProps}) {
-
+export default function Layout({ entry }: { entry: EntryProps }) {
   const history = useNavigate();
   const [getLayout, setLayout] = useState({
-    header: {} as HeaderProps,
-    footer: {} as FooterProps,
-    navHeaderList: {} as HeadermenuProps,
-    navFooterList: {} as NavmenuProps,
+    header: {} as HeaderRes,
+    footer: {} as FooterRes,
+    navHeaderList: [] as NavigationMenu[],
+    navFooterList: [] as Link[],
   });
   const mergeObjs = (...objs: any) => Object.assign({}, ...objs);
   const jsonObj = mergeObjs(
@@ -34,21 +35,26 @@ export default function Layout({ entry }: {entry: EntryProps}) {
       const navHeaderList = header.navigation_menu;
       const navFooterList = footer.navigation.link;
       if (allEntry.length !== header.navigation_menu.length) {
-        allEntry.forEach((entry: Entry) => {
+        allEntry.forEach((entry) => {
           const hFound = header.navigation_menu.find(
-            (navLink: NavLink) => navLink.label === entry.title
+            (navLink) => navLink.label === entry.title
           );
           if (!hFound) {
             navHeaderList.push({
               label: entry.title,
-              page_reference: [{ title: entry.title, url: entry.url }],
+              page_reference: [
+                { title: entry.title, url: entry.url, uid: entry.uid },
+              ],
             });
           }
           const fFound = footer.navigation.link.find(
-            (link: Links) => link.title === entry.title
+            (link) => link.title === entry.title
           );
           if (!fFound) {
-            navFooterList.push({ title: entry.title, href: entry.url });
+            navFooterList.push({
+              title: entry.title,
+              href: entry.url
+            });
           }
         });
       }
@@ -70,12 +76,12 @@ export default function Layout({ entry }: {entry: EntryProps}) {
   }, []);
 
   useEffect(() => {
-    console.error('error...', error);
-    error && history('/error');
+    console.error("error...", error);
+    error && history("/error");
   }, [error]);
 
   return (
-    <div className='layout'>
+    <div className="layout">
       <Header header={getLayout.header} navMenu={getLayout.navHeaderList} />
       <DevTools response={jsonObj} />
       <Outlet />
