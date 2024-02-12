@@ -1,24 +1,24 @@
 {
   "name": "contentstack-react-starter-app",
   "description": "A starter app for Contentstack and React",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "private": true,
   "author": "Contentstack",
   "dependencies": {
-    "@contentstack/live-preview-utils": "^1.3.2",
-    "@contentstack/utils": "^1.3.0",
-    "@textea/json-viewer": "^3.1.1",
-    "@types/react": "^18.2.15",
-    "contentstack": "^3.17.1",
+    "@contentstack/live-preview-utils": "^1.4.0",
+    "@contentstack/utils": "^1.3.1",
+    "@textea/json-viewer": "^3.3.0",
+    "@types/react": "^18.2.48",
+    "contentstack": "^3.19.0",
     "html-react-parser": "^3.0.16",
-    "moment": "^2.29.4",
+    "moment": "^2.30.1",
     "nth-check": "^2.1.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-loading-skeleton": "^3.3.1",
-    "react-router-dom": "^6.14.2",
+    "react-router-dom": "^6.21.2",
     "react-script": "^2.0.5",
-    "typescript": "^4.8.4",
+    "typescript": "^4.9.5",
     "web-vitals": "^2.1.4"
   },
   "overrides": {
@@ -53,9 +53,9 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "@types/react-dom": "^18.2.7",
-    "eslint": "^8.41.0",
-    "eslint-plugin-react": "^7.32.2",
+    "@types/react-dom": "^18.2.18",
+    "eslint": "^8.56.0",
+    "eslint-plugin-react": "^7.33.2",
     "react-scripts": "^5.0.1"
   }
 }
