@@ -9,12 +9,18 @@ import BlogSection from "./blog-section";
 import SectionBucket from "./section-bucket";
 import AboutSectionBucket from "./about-section-bucket";
 import SectionWithHtmlCode from "./section-with-html-code";
-import { RenderProps } from "../typescript/component";
+import { ComponentsProps } from "../typescript/pages";
 
-export default function RenderComponents(props: RenderProps) {
+type RenderComponentsProps ={
+  pageComponents:ComponentsProps[]
+  blogsPage?: boolean
+  contentTypeUid:string
+  entryUid:string
+  locale:string
+}
+
+export default function RenderComponents({ pageComponents, blogsPage, contentTypeUid, entryUid, locale }:RenderComponentsProps) {
     
-  const { pageComponents, blogsPage, contentTypeUid, entryUid, locale } =
-    props;
   return (
     <div data-pageref={entryUid} data-contenttype={contentTypeUid} data-locale={locale}>
       {pageComponents?.map((component, key: number) => {

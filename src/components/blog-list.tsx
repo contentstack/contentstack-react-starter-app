@@ -2,9 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 import parse from 'html-react-parser';
-import { BloglistProps } from "../typescript/blog";
+import { BlogPostRes } from "../typescript/pages";
 
-function BlogList({ bloglist }: {bloglist: BloglistProps}) {
+function BlogList({ bloglist }: {bloglist: BlogPostRes}) {
   let body = typeof bloglist.body === 'string' && bloglist.body.substr(0, 300);
   const stringLength = (body as string).lastIndexOf(' ');
   body = `${(body as string).substr(0, Math.min((body as string).length, stringLength))}...`;

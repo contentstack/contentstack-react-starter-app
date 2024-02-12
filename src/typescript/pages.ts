@@ -1,67 +1,67 @@
-import { Component } from "../typescript/component";
+import {
+  Widget,
+  Section,
+  OurTeam,
+  FromBlog,
+  HeroBanner,
+  SectionWithCards,
+  SectionWithBuckets,
+  SectionWithHtmlCode,
+} from "./components";
 
-type Object = {
-    title: string;
-    body: string;
-    date: string;
-    related_post: [];
-  }
+export type SEO = {
+  enable_search_indexing: boolean;
+  keywords: string;
+  meta_description: string;
+  meta_title: string;
+  $: SEO;
+};
 
-type Author = {
-    title: string;
-    $: Object;
-  }
+export type Img = {
+  url: string;
+  uid: string;
+  title: string;
+  filename: string;
+  $: Img;
+};
 
-type Blog = {
-    url: string;
-    body: string;
-    title: string;
-    $: Object;
-  }
+export type Link = {
+  title: string;
+  href: string;
+  $?: Link;
+};
 
-export type PageEntry = {
-    url: string;
-    page_components: Component[];
-    uid: string;
-    locale: string;
-  }
-  
-export type Prop = {
-    entry: Function
-  }
-  
-export type Entry = {
-    uid: string;
-    page_components: Component[];
-    locale: string;
-  };
-  
-export type BlogData = {
-    is_archived: boolean;
-  }
-  
-export type ArchiveBlogList = [
-    blogs:{
-      url: string;
-      body: string;
-      title: string;
-      $: Object;
-    }
-  ]
+export type ComponentsProps = {
+  widget: Widget;
+  section: Section;
+  our_team: OurTeam;
+  from_blog: FromBlog;
+  hero_banner: HeroBanner;
+  section_with_cards: SectionWithCards;
+  section_with_buckets: SectionWithBuckets;
+  section_with_html_code: SectionWithHtmlCode;
+};
+export type Page = {
+  $: Page;
+  title: string;
+  url: string;
+  seo: SEO;
+  uid: string;
+  locale: string;
+  page_components: ComponentsProps[];
+};
 
-export type Banner = {
-    uid: string;
-    page_components:Component[];
-    locale: string;
-  }
-
-export type Post = {
-    url: string;
-    page_components:[];
-    title: string;
-    date:string;
-    author:Author[];
-    body:string;
-    related_post:[Blog];
-    $:Object;
-  }
+export type BlogPostRes = {
+  title: string;
+  url: string;
+  seo: SEO;
+  uid: string;
+  body: string;
+  locale: string;
+  author: [{ $: { uid: string; title: string }; uid: string; title: string }];
+  date: string;
+  featured_image: Img;
+  related_post: BlogPostRes[];
+  is_archived: boolean;
+  $: BlogPostRes;
+};

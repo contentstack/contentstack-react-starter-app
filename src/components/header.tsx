@@ -3,9 +3,9 @@ import { Link, NavLink, useMatch, useResolvedPath } from 'react-router-dom';
 import parse from 'html-react-parser';
 import Tooltip from '../components/too-tip';
 import Skeleton from 'react-loading-skeleton';
-import { HeaderProps,HeadermenuProps } from "../typescript/layout";
+import { HeaderRes, NavigationMenu } from "../typescript/response";
 
-export default function Header({ header, navMenu }: {header: HeaderProps, navMenu: HeadermenuProps}) {
+export default function Header({ header, navMenu }: {header: HeaderRes, navMenu: NavigationMenu[]}) {
   let resolved;
   let match;
 
@@ -14,7 +14,7 @@ export default function Header({ header, navMenu }: {header: HeaderProps, navMen
       {Object.keys(header).length ? (
         <div
           className='note-div'
-          {...header.notification_bar.$?.announcement_text}
+          {...header.notification_bar.$?.announcement_text as {}}
         >
           {header.notification_bar.show_announcement && header.notification_bar.announcement_text &&
             parse(header.notification_bar.announcement_text)}
@@ -29,7 +29,7 @@ export default function Header({ header, navMenu }: {header: HeaderProps, navMen
           {header.logo ? (
             <Link to='/' title='Contentstack'>
               <img
-                {...header.logo.$?.url}
+                {...header.logo.$?.url as {}}
                 className='logo'
                 src={header.logo.url}
                 alt={header.logo.filename}
@@ -55,7 +55,7 @@ export default function Header({ header, navMenu }: {header: HeaderProps, navMen
                     (match = useMatch({ path: resolved.pathname, end: true })),
                     (
                       <NavLink
-                        {...list.$?.label}
+                        {...list.$?.label as {}}
                         to={list.page_reference[0].url}
                         className={match ? 'active' : ''}
                       >
