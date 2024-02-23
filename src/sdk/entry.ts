@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import * as Utils from "@contentstack/utils";
 import ContentstackLivePreview from "@contentstack/live-preview-utils";
 import {
@@ -39,12 +40,8 @@ if (customHostBaseUrl && isValidCustomHostUrl(customHostBaseUrl)) {
 
 // Setting LP if enabled
 ContentstackLivePreview.init({
-  stackSdk: {
-    ...Stack,
-    headers: {
-      api_key: REACT_APP_CONTENTSTACK_API_KEY as string,
-    },
-  },
+  //@ts-ignore
+  stackSdk: Stack,
   clientUrlParams:{
     host: REACT_APP_CONTENTSTACK_APP_HOST
   }
