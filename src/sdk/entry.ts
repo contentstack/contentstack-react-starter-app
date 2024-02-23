@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import * as Utils from "@contentstack/utils";
 import ContentstackLivePreview from "@contentstack/live-preview-utils";
 import {
@@ -21,6 +22,8 @@ type GetEntryByUrl = {
 
 const {
   REACT_APP_CONTENTSTACK_API_HOST,
+  REACT_APP_CONTENTSTACK_API_KEY,
+  REACT_APP_CONTENTSTACK_APP_HOST,
 } = process.env;
 
 const customHostBaseUrl = REACT_APP_CONTENTSTACK_API_HOST? customHostUrl(
@@ -37,9 +40,11 @@ if (customHostBaseUrl && isValidCustomHostUrl(customHostBaseUrl)) {
 
 // Setting LP if enabled
 ContentstackLivePreview.init({
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-//@ts-ignore
-stackSdk:Stack,
+  //@ts-ignore
+  stackSdk: Stack,
+  clientUrlParams:{
+    host: REACT_APP_CONTENTSTACK_APP_HOST
+  }
 })?.catch((error) => console.error(error));
 
 
