@@ -21,6 +21,8 @@ type GetEntryByUrl = {
 
 const {
   REACT_APP_CONTENTSTACK_API_HOST,
+  REACT_APP_CONTENTSTACK_API_KEY,
+  REACT_APP_CONTENTSTACK_APP_HOST,
 } = process.env;
 
 const customHostBaseUrl = REACT_APP_CONTENTSTACK_API_HOST? customHostUrl(
@@ -37,9 +39,15 @@ if (customHostBaseUrl && isValidCustomHostUrl(customHostBaseUrl)) {
 
 // Setting LP if enabled
 ContentstackLivePreview.init({
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-//@ts-ignore
-stackSdk:Stack,
+  stackSdk: {
+    ...Stack,
+    headers: {
+      api_key: REACT_APP_CONTENTSTACK_API_KEY as string,
+    },
+  },
+  clientUrlParams:{
+    host: REACT_APP_CONTENTSTACK_APP_HOST
+  }
 })?.catch((error) => console.error(error));
 
 
