@@ -8,7 +8,6 @@ import Error from "./pages/error";
 import "./styles/third-party.css";
 import "./styles/style.css";
 import "./styles/modal.css";
-import "@contentstack/live-preview-utils/dist/main.css";
 import "react-loading-skeleton/dist/skeleton.css";
 import { EntryProps } from "./typescript/components";
 

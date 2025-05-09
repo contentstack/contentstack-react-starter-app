@@ -42,6 +42,11 @@ if (customHostBaseUrl && isValidCustomHostUrl(customHostBaseUrl)) {
 ContentstackLivePreview.init({
   //@ts-ignore
   stackSdk: Stack,
+  enable: true,
+  mode: "builder",
+  stackDetails: {
+    apiKey: REACT_APP_CONTENTSTACK_API_KEY,
+  },
   clientUrlParams:{
     host: REACT_APP_CONTENTSTACK_APP_HOST
   }
