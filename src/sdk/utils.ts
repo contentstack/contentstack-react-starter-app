@@ -1,7 +1,7 @@
 import { Config, Region, LivePreview, Stack } from "contentstack";
 
 // Extract environment variables for easier access and maintenance
-const ENV = {
+export const ENV = {
   API_KEY: import.meta.env.VITE_CONTENTSTACK_API_KEY as string,
   DELIVERY_TOKEN: import.meta.env.VITE_CONTENTSTACK_DELIVERY_TOKEN as string,
   ENVIRONMENT: import.meta.env.VITE_CONTENTSTACK_ENVIRONMENT as string,
@@ -11,6 +11,8 @@ const ENV = {
   PREVIEW_TOKEN: import.meta.env.VITE_CONTENTSTACK_PREVIEW_TOKEN as string,
   PREVIEW_HOST: import.meta.env.VITE_CONTENTSTACK_PREVIEW_HOST as string,
   APP_HOST: import.meta.env.VITE_CONTENTSTACK_APP_HOST as string,
+  API_HOST: import.meta.env.VITE_CONTENTSTACK_API_HOST as string,
+  LIVE_EDIT_TAGS: import.meta.env.VITE_CONTENTSTACK_LIVE_EDIT_TAGS as string,
 };
 
 // basic env validation
