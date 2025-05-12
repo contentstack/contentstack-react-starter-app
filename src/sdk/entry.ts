@@ -5,6 +5,7 @@ import {
   customHostUrl,
   initializeContentStackSdk,
   isValidCustomHostUrl,
+  ENV,
 } from "./utils";
 
 type GetEntry = {
@@ -20,14 +21,8 @@ type GetEntryByUrl = {
   jsonRtePath: string[] | undefined;
 };
 
-// Get environment variables using Vite's import.meta.env
-const VITE_CONTENTSTACK_API_HOST = import.meta.env.VITE_CONTENTSTACK_API_HOST;
-const VITE_CONTENTSTACK_API_KEY = import.meta.env.VITE_CONTENTSTACK_API_KEY;
-const VITE_CONTENTSTACK_APP_HOST = import.meta.env.VITE_CONTENTSTACK_APP_HOST;
-
-const customHostBaseUrl = VITE_CONTENTSTACK_API_HOST? customHostUrl(
-  VITE_CONTENTSTACK_API_HOST as string
-): "";
+// Get custom host base URL from ENV.API_HOST
+const customHostBaseUrl = ENV.API_HOST ? customHostUrl(ENV.API_HOST) : "";
 
 // SDK initialization
 const Stack = initializeContentStackSdk();
@@ -41,13 +36,13 @@ if (customHostBaseUrl && isValidCustomHostUrl(customHostBaseUrl)) {
 ContentstackLivePreview.init({
   //@ts-ignore
   stackSdk: Stack,
-  enable: true,
+  enable: ENV.LIVE_PREVIEW === "true",
   mode: "builder",
   stackDetails: {
-    apiKey: VITE_CONTENTSTACK_API_KEY,
+    apiKey: ENV.API_KEY,
   },
   clientUrlParams:{
-    host: VITE_CONTENTSTACK_APP_HOST
+    host: ENV.APP_HOST
   }
 })?.catch((error) => console.error(error));
 
