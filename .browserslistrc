@@ -1,0 +1,12 @@
+# Browsers that we support
+
+# For production
+last 2 versions
+not dead
+> 0.5%
+not IE 11
+
+# For development
+last 1 chrome version
+last 1 firefox version
+last 1 safari version

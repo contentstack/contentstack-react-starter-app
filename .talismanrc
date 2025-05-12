@@ -2,8 +2,14 @@ fileignoreconfig:
 - filename: .github/workflows/secrets-scan.yml
   ignore_detectors:
     - filecontent
+- filename: src/vite-env.d.ts
+  checksum: ffda6404f84b35b7e81317ddebcbe69cb2b1aed2727c61a58217dcbb475aaf15
+- filename: index.html
+  checksum: c285279b74fe0f3b7b387049dceeb5634f4a0a3431bdcca5fdef35c360ac2101
 - filename: package-lock.json
-  checksum: 4245b45c24f509546e4a54e4eb59f8a3f44b32e9df1247afb61ba0bd67b459ba
+  checksum: 62297ed5002d10755b01385713562cfb3f78e1032e38f15f8f433c0e00a4fd71
+- filename: src/sdk/utils.ts
+  checksum: 00fb0674684ede99467f5d77012d92136481d54c75894768646e58703ae0fa5a
 - filename: src/sdk/entry.ts
-  checksum: 6cdf1d408a83b6378c6f2439d95c42dd1ad257441e0989937365428a3926a384
+  checksum: 42de7b871970e732d243f1183b5eacf1ebe36f3dc0560afa6cc257107f696c25
 version: "1.0"

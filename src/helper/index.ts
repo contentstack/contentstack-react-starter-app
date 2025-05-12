@@ -3,7 +3,7 @@ import { addEditableTags } from "@contentstack/utils";
 import { FooterRes, HeaderRes } from "../typescript/response";
 import { BlogPostRes, Page } from "../typescript/pages";
 
-const liveEdit = process.env.REACT_APP_CONTENTSTACK_LIVE_EDIT_TAGS === "true";
+const liveEdit = import.meta.env.VITE_CONTENTSTACK_LIVE_EDIT_TAGS === "true";
 
 export const getHeaderRes = async (): Promise<HeaderRes> => {
   const response = (await getEntry({
