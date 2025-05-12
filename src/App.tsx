@@ -5,6 +5,7 @@ import Home from "./pages/index";
 import Blog from "./pages/blog";
 import BlogPost from "./pages/blog-post";
 import Error from "./pages/error";
+
 import "./styles/third-party.css";
 import "./styles/style.css";
 import "./styles/modal.css";
@@ -25,12 +26,9 @@ function App() {
           <Route index element={<Home entry={getPageRes} />} />
           <Route path="/:page" element={<Home entry={getPageRes} />} />
           <Route path="/blog" element={<Blog entry={getPageRes} />} />
-          <Route
-            path="/blog/:blogId"
-            element={<BlogPost entry={getPageRes} />}
-          />
-          <Route path="/404" element={<Error />}></Route>
-          <Route path="*" element={<Error />}></Route>
+          <Route path="/blog/:blogId" element={<BlogPost entry={getPageRes} />} />
+          <Route path="/404" element={<Error />} />
+          <Route path="*" element={<Error />} />
         </Route>
       </Routes>
     </div>
