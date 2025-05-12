@@ -20,14 +20,13 @@ type GetEntryByUrl = {
   jsonRtePath: string[] | undefined;
 };
 
-const {
-  REACT_APP_CONTENTSTACK_API_HOST,
-  REACT_APP_CONTENTSTACK_API_KEY,
-  REACT_APP_CONTENTSTACK_APP_HOST,
-} = process.env;
+// Get environment variables using Vite's import.meta.env
+const VITE_CONTENTSTACK_API_HOST = import.meta.env.VITE_CONTENTSTACK_API_HOST;
+const VITE_CONTENTSTACK_API_KEY = import.meta.env.VITE_CONTENTSTACK_API_KEY;
+const VITE_CONTENTSTACK_APP_HOST = import.meta.env.VITE_CONTENTSTACK_APP_HOST;
 
-const customHostBaseUrl = REACT_APP_CONTENTSTACK_API_HOST? customHostUrl(
-  REACT_APP_CONTENTSTACK_API_HOST as string
+const customHostBaseUrl = VITE_CONTENTSTACK_API_HOST? customHostUrl(
+  VITE_CONTENTSTACK_API_HOST as string
 ): "";
 
 // SDK initialization
@@ -45,10 +44,10 @@ ContentstackLivePreview.init({
   enable: true,
   mode: "builder",
   stackDetails: {
-    apiKey: REACT_APP_CONTENTSTACK_API_KEY,
+    apiKey: VITE_CONTENTSTACK_API_KEY,
   },
   clientUrlParams:{
-    host: REACT_APP_CONTENTSTACK_APP_HOST
+    host: VITE_CONTENTSTACK_APP_HOST
   }
 })?.catch((error) => console.error(error));
 
