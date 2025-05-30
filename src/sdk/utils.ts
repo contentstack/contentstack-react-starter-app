@@ -7,12 +7,12 @@ export const ENV = {
   ENVIRONMENT: import.meta.env.VITE_CONTENTSTACK_ENVIRONMENT as string,
   REGION: import.meta.env.VITE_CONTENTSTACK_REGION as string,
   BRANCH: import.meta.env.VITE_CONTENTSTACK_BRANCH as string || "main",
-  LIVE_PREVIEW: import.meta.env.VITE_CONTENTSTACK_LIVE_PREVIEW as string,
+  LIVE_PREVIEW: import.meta.env.VITE_CONTENTSTACK_LIVE_PREVIEW as string || "false",
   PREVIEW_TOKEN: import.meta.env.VITE_CONTENTSTACK_PREVIEW_TOKEN as string,
   PREVIEW_HOST: import.meta.env.VITE_CONTENTSTACK_PREVIEW_HOST as string,
   APP_HOST: import.meta.env.VITE_CONTENTSTACK_APP_HOST as string,
   API_HOST: import.meta.env.VITE_CONTENTSTACK_API_HOST as string,
-  LIVE_EDIT_TAGS: import.meta.env.VITE_CONTENTSTACK_LIVE_EDIT_TAGS as string,
+  LIVE_EDIT_TAGS: import.meta.env.VITE_CONTENTSTACK_LIVE_EDIT_TAGS as string || 'false',
 };
 
 // basic env validation
