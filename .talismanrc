@@ -3,7 +3,7 @@ fileignoreconfig:
   ignore_detectors:
     - filecontent
 - filename: src/vite-env.d.ts
-  checksum: ffda6404f84b35b7e81317ddebcbe69cb2b1aed2727c61a58217dcbb475aaf15
+  checksum: 44662a93b9b4c919357057313f5fbb340fbbc107c607654b3a00d6062b265282
 - filename: index.html
   checksum: c285279b74fe0f3b7b387049dceeb5634f4a0a3431bdcca5fdef35c360ac2101
 - filename: package-lock.json
