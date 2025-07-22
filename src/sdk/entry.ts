@@ -32,19 +32,21 @@ if (customHostBaseUrl && isValidCustomHostUrl(customHostBaseUrl)) {
   Stack.setHost(customHostBaseUrl);
 }
 
-// Setting LP if enabled
-ContentstackLivePreview.init({
-  //@ts-ignore
-  stackSdk: Stack,
-  enable: ENV.LIVE_PREVIEW === "true",
-  mode: "builder",
-  stackDetails: {
-    apiKey: ENV.API_KEY,
-  },
-  clientUrlParams:{
-    host: ENV.APP_HOST
-  }
-})?.catch((error) => console.error(error));
+if (ENV.LIVE_PREVIEW === "true") {
+  // Setting LP if enabled
+  ContentstackLivePreview.init({
+    //@ts-ignore
+    stackSdk: Stack,
+    enable: ENV.LIVE_PREVIEW === "true",
+    mode: "builder",
+    stackDetails: {
+      apiKey: ENV.API_KEY,
+    },
+    clientUrlParams: {
+      host: ENV.APP_HOST
+    }
+  })?.catch((error) => console.error(error));
+}
 
 
 export const { onEntryChange } = ContentstackLivePreview;
