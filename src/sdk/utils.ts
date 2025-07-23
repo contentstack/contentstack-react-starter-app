@@ -27,7 +27,7 @@ export const isBasicConfigValid = () => {
 // Live preview config validation
 export const isLpConfigValid = () => {
   return (
-    !!ENV.LIVE_PREVIEW &&
+    ENV.LIVE_PREVIEW === "true" &&
     !!ENV.PREVIEW_TOKEN &&
     !!ENV.PREVIEW_HOST &&
     !!ENV.APP_HOST
@@ -75,7 +75,7 @@ export const initializeContentStackSdk = (): Stack => {
 };
 
 // api host url
-export const customHostUrl = (baseUrl=''): string => {
+export const customHostUrl = (baseUrl = ''): string => {
   return baseUrl.replace("api", "cdn");
 };
 
