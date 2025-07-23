@@ -11,5 +11,5 @@ fileignoreconfig:
 - filename: src/sdk/utils.ts
   checksum: 00fb0674684ede99467f5d77012d92136481d54c75894768646e58703ae0fa5a
 - filename: src/sdk/entry.ts
-  checksum: 33b8aa8ad61a79911b22c61b418094034b308ca96bdebdc2619398337433fa1d
+  checksum: 4f8b6df5fa08a66e57286a0dd69d1b49064f7f4540a627e8fa63730b6ee9cbf3
 version: "1.0"
