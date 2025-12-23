@@ -5,6 +5,7 @@ import {
   customHostUrl,
   initializeContentStackSdk,
   isValidCustomHostUrl,
+  ENV,
 } from "./utils";
 
 type GetEntry = {
@@ -20,15 +21,8 @@ type GetEntryByUrl = {
   jsonRtePath: string[] | undefined;
 };
 
-const {
-  REACT_APP_CONTENTSTACK_API_HOST,
-  REACT_APP_CONTENTSTACK_API_KEY,
-  REACT_APP_CONTENTSTACK_APP_HOST,
-} = process.env;
-
-const customHostBaseUrl = REACT_APP_CONTENTSTACK_API_HOST? customHostUrl(
-  REACT_APP_CONTENTSTACK_API_HOST as string
-): "";
+// Get custom host base URL from ENV.API_HOST
+const customHostBaseUrl = ENV.API_HOST ? customHostUrl(ENV.API_HOST) : "";
 
 // SDK initialization
 const Stack = initializeContentStackSdk();
@@ -38,14 +32,21 @@ if (customHostBaseUrl && isValidCustomHostUrl(customHostBaseUrl)) {
   Stack.setHost(customHostBaseUrl);
 }
 
-// Setting LP if enabled
-ContentstackLivePreview.init({
-  //@ts-ignore
-  stackSdk: Stack,
-  clientUrlParams:{
-    host: REACT_APP_CONTENTSTACK_APP_HOST
-  }
-})?.catch((error) => console.error(error));
+if (ENV.LIVE_PREVIEW === "true") {
+  // Setting LP if enabled
+  ContentstackLivePreview.init({
+    //@ts-ignore
+    stackSdk: Stack,
+    enable: ENV.LIVE_PREVIEW === "true",
+    mode: "builder",
+    stackDetails: {
+      apiKey: ENV.API_KEY,
+    },
+    clientUrlParams: {
+      host: ENV.APP_HOST
+    }
+  })?.catch((error) => console.error(error));
+}
 
 
 export const { onEntryChange } = ContentstackLivePreview;
